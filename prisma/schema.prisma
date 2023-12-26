@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Clients
+model User {
+  id        String   @id @default(uuid())
+  username  String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationship: User follows CamUser
+  following CamUser[] @relation("FollowRelation")
+  dareCoins Int       @default(0)
+}
+
+// Influencers
+model CamUser {
+  id       String @id @default(uuid())
+  name     String
+  userName String @unique
+  email    String @unique
+
+  followedBy User[] @relation("FollowRelation")
+
+  Video   Video[]
+  Channel Channel?
+
+  dareCoins Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Channel {
+  id          String @id @default(uuid())
+  name        String @unique
+  description String
+
+  owner CamUser @relation(fields: [name], references: [userName])
+
+  Video Video[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Video {
+  id    String @id @default(uuid())
+  title String
+  url   String
+
+  owner   CamUser @relation(fields: [ownerId], references: [id])
+  ownerId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Channel   Channel? @relation(fields: [channelId], references: [name])
+  channelId String?
+
+  @@index([ownerId])
+  @@index([channelId])
+}
