@@ -1,4 +1,6 @@
+'use client';
 import LiveKitGeneral from './components/LiveKit/LiveKitGeneral';
+import { Button } from './components/shadCn/ui/button';
 
 export default function Home() {
     return (
@@ -7,6 +9,7 @@ export default function Home() {
                 <div>Hello</div>
                 <LiveKitGeneral />
                 <div>Hello</div>
+                <Button variant='secondary'>Button</Button>
             </div>
         </main>
     );
