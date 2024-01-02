@@ -1,5 +1,5 @@
 import Footer from '@/app/components/Footer/Footer';
-import NavBar from '@/app/components/header/NavBar';
+import Header from '@/app/components/header/Header';
 import React from 'react';
 
 interface LayoutProps {
@@ -9,7 +9,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <main className='flex flex-col min-h-screen items-center'>
-            <NavBar />
+            <Header />
             {children}
             <Footer />
         </main>
