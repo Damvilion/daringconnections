@@ -8,7 +8,7 @@ export default function Home() {
             <div className='flex justify-between'>
                 <div>Hello</div>
                 <LiveKitGeneral />
-                <div>Hello</div>
+
                 <Button variant='secondary'>Button</Button>
             </div>
         </main>

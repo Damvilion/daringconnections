@@ -3,8 +3,10 @@ import '@livekit/components-styles';
 import React, { useState, useEffect } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
 
-const LiveKitCam = () => {
-    const room = '';
+interface LiveKitCamProps {
+    room: string;
+}
+const LiveKitCam = ({ room }: LiveKitCamProps) => {
     const username = '';
     const [token, setToken] = useState('');
     useEffect(() => {
