@@ -13,3 +13,7 @@ export const customerSignUpSchema = z
     .refine((data) => data.password === data.confirmPassword, { message: 'Passwords must match', path: ['confirmPassword'] });
 
 export type TSignUpSchema = z.infer<typeof customerSignUpSchema>;
+
+// Customer Login
+export const customerLoginSchema = z.object({ email: z.string().email('Invalid email address'), password: z.string().min(7) });
+export type TLoginSchema = z.infer<typeof customerLoginSchema>;

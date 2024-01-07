@@ -4,8 +4,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TSignUpSchema, customerSignUpSchema } from '@/app/lib/types/types';
 import axios, { AxiosResponse } from 'axios';
-import { Button as ShadButton } from '../../shadCn/ui/button';
+import { Button as ShadButton } from '@/app/components/shadCn/ui/button';
 import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { Separator } from '@/app/components/shadCn/ui/separator';
 
 const SignUpComponent = () => {
     type AxiosErrorType = 'Email & Username already exists' | 'Email already exists' | 'Username already exists' | 'FAILED';
@@ -67,11 +69,13 @@ const SignUpComponent = () => {
                         {errorType === 'Email already exists' && <p className='text-red-500 text-xs'>{errorType}</p>}
                     </div>
                 </div>
+
                 {/* USERNAME */}
                 <div className='flex flex-col sm:flex-row gap-1 items-center w-full'>
                     <label className='text-xs md:text-base lg:text-lg' htmlFor='username'>
                         Username
                     </label>
+
                     <div className='flex flex-col sm:ml-auto'>
                         <input
                             {...register('username', {
@@ -111,7 +115,7 @@ const SignUpComponent = () => {
                             className='text-sm md:text-base border-solid border border-black p-2 md:p-3 rounded-md'
                             type='password'
                         />
-                        {errors.confirmPassword && <p className='text-red-500 text-xs'>{`${errors.confirmPassword.message}`}</p>}
+                        {errors.confirmPassword && <p className='text-red-500 text-xs'>{errors.confirmPassword.message}</p>}
                     </div>
                 </div>
 
@@ -119,28 +123,28 @@ const SignUpComponent = () => {
                 <div className='flex flex-row items-start gap-1 sm:items-center w-full'>
                     <input type='checkbox' {...register('over18')} />
                     <div className='flex flex-col'>
-                        <label className='text-xs md:text-sm' htmlFor='over18'>
+                        <label className='text-xs md:text-sm text-left' htmlFor='over18'>
                             I am over 18 years old
                         </label>
-                        {errors.over18 && <p className='text-red-500 text-xs'>{`${errors.over18.message}`}</p>}
+                        {errors.over18 && <p className='text-red-500 text-xs'>{errors.over18.message}</p>}
                     </div>
                 </div>
                 <div className='flex flex-row items-start gap-1 sm:items-center w-full'>
                     <input type='checkbox' {...register('termsAndConditions')} />
                     <div className='flex flex-col'>
-                        <label className='text-xs md:text-sm' htmlFor='termsAndConditions'>
+                        <label className='text-xs md:text-sm text-left' htmlFor='termsAndConditions'>
                             I have read and agree to the Terms and Conditions
                         </label>
-                        {errors.termsAndConditions && <p className='text-red-500 text-xs'>{`${errors.termsAndConditions.message}`}</p>}
+                        {errors.termsAndConditions && <p className='text-red-500 text-xs'>{errors.termsAndConditions.message}</p>}
                     </div>
                 </div>
                 <div className='flex flex-row items-start gap-1 sm:items-center w-full'>
                     <input type='checkbox' {...register('privacyPolicy')} />
                     <div className='flex flex-col'>
-                        <label className='text-xs md:text-sm' htmlFor='privacyPolicy'>
+                        <label className='text-xs md:text-sm text-left' htmlFor='privacyPolicy'>
                             I have read and agree to the privacy policy
                         </label>
-                        {errors.privacyPolicy && <p className='text-red-500 text-xs'>{`${errors.privacyPolicy.message}`}</p>}
+                        {errors.privacyPolicy && <p className='text-red-500 text-xs'>{errors.privacyPolicy.message}</p>}
                     </div>
                 </div>
                 <div className='w-full mx-auto'>
@@ -154,7 +158,14 @@ const SignUpComponent = () => {
                         </p>
                     )}
                 </div>
-                <div className='text-xs'>SIGN IN WITH GOOGLE PLACEHOLDER</div>
+                <Separator className='my-1' />
+                <div className='text-xs w-full text-center'>SIGN IN WITH GOOGLE PLACEHOLDER</div>
+                <p className='text-xs'>
+                    Already a member?{' '}
+                    <Link className='font-semibold' href='/login'>
+                        login
+                    </Link>{' '}
+                </p>
             </form>
         </div>
     );
