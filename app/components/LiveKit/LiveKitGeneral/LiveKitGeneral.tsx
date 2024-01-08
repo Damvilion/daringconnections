@@ -1,11 +1,13 @@
 'use client';
-import '@livekit/components-styles';
+// import '@livekit/components-styles';
 import React, { useState, useEffect } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
+import LiveKitGeneralRoom from './LiveKitGeneralRoom';
 
 const LiveKitGeneral = () => {
     // Fetched from redis
     const room = '';
+
     const username = '';
     const [token, setToken] = useState('');
     useEffect(() => {
@@ -27,7 +29,10 @@ const LiveKitGeneral = () => {
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
             // Use the default LiveKit theme for nice styles.
             // data-lk-theme='default'
-            style={{ height: '100dvh' }}></LiveKitRoom>
+            // style={{ height: '100dvh' }}
+        >
+            <LiveKitGeneralRoom />
+        </LiveKitRoom>
     );
 };
 
