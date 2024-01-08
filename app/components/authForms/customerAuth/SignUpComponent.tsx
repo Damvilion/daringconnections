@@ -157,7 +157,7 @@ const SignUpComponent = () => {
                         <label className='text-xs md:text-sm text-left' htmlFor='over18'>
                             I am over 18 years old
                         </label>
-                        {errors.over18 && <p className='text-red-500 text-xs'>{errors.over18.message}</p>}
+                        {errors.over18 && <p className='text-left text-red-500 text-xs'>{errors.over18.message}</p>}
                     </div>
                 </div>
                 <div className='flex flex-row items-start gap-1 sm:items-center w-full'>
@@ -166,7 +166,7 @@ const SignUpComponent = () => {
                         <label className='text-xs md:text-sm text-left' htmlFor='termsAndConditions'>
                             I have read and agree to the Terms and Conditions
                         </label>
-                        {errors.termsAndConditions && <p className='text-red-500 text-xs'>{errors.termsAndConditions.message}</p>}
+                        {errors.termsAndConditions && <p className='text-left text-red-500 text-xs'>{errors.termsAndConditions.message}</p>}
                     </div>
                 </div>
                 <div className='flex flex-row items-start gap-1 sm:items-center w-full'>
@@ -175,7 +175,7 @@ const SignUpComponent = () => {
                         <label className='text-xs md:text-sm text-left' htmlFor='privacyPolicy'>
                             I have read and agree to the privacy policy
                         </label>
-                        {errors.privacyPolicy && <p className='text-red-500 text-xs'>{errors.privacyPolicy.message}</p>}
+                        {errors.privacyPolicy && <p className='text-left text-red-500 text-xs'>{errors.privacyPolicy.message}</p>}
                     </div>
                 </div>
                 <div className='w-full mx-auto'>
