@@ -1,16 +1,14 @@
 'use client';
-import LiveKitGeneral from './components/LiveKit/LiveKitGeneral';
-import { Button } from './components/shadCn/ui/button';
+import LiveKitGeneral from './components/LiveKit/LiveKitGeneral/LiveKitGeneral';
+// import MainCard from './components/auth/customerCard/MainCard';
 
 export default function Home() {
     return (
-        <main className='flex min-h-screen flex-col items-center justify-between'>
-            <div className='flex justify-between'>
-                <div>Hello</div>
+        <main className='h-screen'>
+            <div className='flex h-full items-center justify-center'>
                 <LiveKitGeneral />
-
-                <Button variant='secondary'>Button</Button>
             </div>
+            {/* <MainCard /> */}
         </main>
     );
 }

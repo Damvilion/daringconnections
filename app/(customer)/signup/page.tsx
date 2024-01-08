@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import SignUpComponent from '@/app/components/authForms/customerAuth/SignUpComponent';
+import SignUpComponent from '@/app/components/auth/authForms/customerAuth/SignUpComponent';
 import { useRouter } from 'next/navigation';
 import { current_profile } from '@/app/lib/current-profile';
 
