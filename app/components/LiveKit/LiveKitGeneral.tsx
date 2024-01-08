@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
 
 const LiveKitGeneral = () => {
+    // Fetched from redis
     const room = '';
     const username = '';
     const [token, setToken] = useState('');
