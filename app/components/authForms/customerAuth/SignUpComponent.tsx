@@ -8,6 +8,9 @@ import { Button as ShadButton } from '@/app/components/shadCn/ui/button';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { Separator } from '@/app/components/shadCn/ui/separator';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { FirebaseAuth, FirebaseGoogleAuthProvider } from '@/app/firebase/firebase-config';
+import { useRouter } from 'next/navigation';
 
 const SignUpComponent = () => {
     type AxiosErrorType = 'Email & Username already exists' | 'Email already exists' | 'Username already exists' | 'FAILED';
@@ -28,6 +31,7 @@ const SignUpComponent = () => {
     });
 
     const [errorType, setErrorType] = useState<AxiosErrorType | ''>('');
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data: TSignUpSchema) => {
         try {
@@ -43,6 +47,33 @@ const SignUpComponent = () => {
             setErrorType('FAILED');
         }
         reset();
+    };
+
+    const router = useRouter();
+
+    const signINWithGoogle = () => {
+        setLoading(true);
+        signInWithPopup(FirebaseAuth, FirebaseGoogleAuthProvider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                if (result.user) {
+                    setLoading(false);
+                    router.push('/');
+                }
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+
+                console.log(errorCode, errorMessage, email, credential);
+                // ...
+            })
+            .finally(() => setLoading(false));
     };
     return (
         <div className='border-slate-900 border-solid border rounded-md shadow-md p-3 sm:p-4 md:p-7 lg:p-10'>
@@ -158,8 +189,18 @@ const SignUpComponent = () => {
                         </p>
                     )}
                 </div>
+                <p className='text-xs text-gray-500 text-center w-full -m-1'>or</p>
                 <Separator className='my-1' />
-                <div className='text-xs w-full text-center'>SIGN IN WITH GOOGLE PLACEHOLDER</div>
+
+                <ShadButton
+                    type='button'
+                    onClick={signINWithGoogle}
+                    // className='rounded-full border-solid border-2 border-black text-black bg-white mx-auto hover:bg-white'
+                    variant='googleButton'>
+                    {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+                    Sign In With Google
+                </ShadButton>
+
                 <p className='text-xs'>
                     Already a member?{' '}
                     <Link className='font-semibold' href='/login'>
