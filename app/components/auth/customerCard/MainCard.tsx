@@ -1,64 +1,47 @@
-import React from 'react';
-import { Card, CardContent, CardHeader } from '@/app/components/shadCn/ui/card';
-import { Avatar, AvatarImage } from '../../shadCn/ui/avatar';
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent } from '@/app/components/shadCn/ui/card';
 import { Button } from '../../shadCn/ui/button';
-import { Separator } from '../../shadCn/ui/separator';
-import Image from 'next/image';
+import { Separator } from '@/app/components/shadCn/ui/separator';
+import { current_profile } from '@/app/lib/current-profile';
+import CustomerInfoCard from './CustomerInfoCard';
+import CustomerCardContent from './CustomerCardContent';
+
+// import CardSkeleton from './CardSkeleton';
 
 const MainCard = () => {
+    type Profile = {
+        id: string;
+        username: string;
+        dareCoins: number;
+        email?: string;
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [user, setUser] = useState<null | Profile>(null);
+    const [loading, setLoading] = useState(true);
+    const getUser = async () => {
+        const user: Profile = (await current_profile()) as Profile;
+        if (!user) {
+            setLoading(false);
+            return;
+        }
+
+        setUser(user);
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
     return (
-        <Card className='absolute ml-3'>
-            <CardHeader className=''>
-                <div className='flex items-center px-5 gap-1'>
-                    <Avatar>
-                        <AvatarImage src='/icon_default.jpg' />
-                    </Avatar>
-                    <div className='flex flex-col items-start'>
-                        <p className='text-xs font-bold'>Status: {'Anonymous'}</p>
-                        <div className='flex items-center gap-2'>
-                            <p className='text-xs font-bold'>DareCoins: {0}</p>
-                            <p className='text-xs cursor-pointer'>(get more)</p>
-                        </div>
-                    </div>
-                </div>
-            </CardHeader>
+        <Card className='mr-auto ml-auto lg:block hidden'>
+            <CustomerInfoCard username={user?.username} dareCoins={user?.dareCoins} loading={loading} />
+            <Separator className='my-2 w-[75%] mx-auto' />
             <CardContent>
-                <div className='flex flex-col item-start gap-1'>
-                    <span className='flex items-center gap-2 hover:bg-purple-700 transition-colors p-1 rounded-lg cursor-pointer group'>
-                        <Image
-                            className='invert group-hover:invert-0'
-                            src='/assets/icons/home_icon_white.png'
-                            width={30}
-                            height={30}
-                            alt='Home Icon'
-                        />
-
-                        <span className='text-left w-full group-hover:text-white'>Home</span>
-                    </span>
-                    <span className='flex items-center gap-2 hover:bg-purple-700 transition-colors p-1 rounded-lg cursor-pointer group'>
-                        <Image
-                            className='invert group-hover:invert-0'
-                            src='/assets/icons/bell_icon_white.png'
-                            width={30}
-                            height={30}
-                            alt='Home Icon'
-                        />
-                        <span className='text-left w-full group-hover:text-white'>Notifications</span>
-                    </span>
-                    <span className='flex items-center gap-2 hover:bg-purple-700 transition-colors p-1 rounded-lg cursor-pointer group'>
-                        <Image
-                            className='invert group-hover:invert-0'
-                            src='/assets/icons/messages_icon_white.png'
-                            width={27}
-                            height={30}
-                            alt='Home Icon'
-                        />
-                        <span className='text-left w-full group-hover:text-white'>Messages</span>
-                    </span>
-
-                    <Separator className='my-2' />
-                    <Button className='w-full bg-purple-500 hover:bg-purple-400'>Connect</Button>
-                </div>
+                {user?.username && <CustomerCardContent />}
+                <Button className='w-full bg-purple-500 hover:bg-purple-400'>Connect</Button>
             </CardContent>
         </Card>
     );

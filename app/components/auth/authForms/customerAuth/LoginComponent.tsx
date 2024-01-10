@@ -8,8 +8,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { TLoginSchema, customerLoginSchema } from '@/app/lib/types/types';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseAuth } from '@/app/firebase/firebase-config';
+import { useRouter } from 'next/navigation';
 
 const LoginComponent = () => {
+    const router = useRouter();
     interface FirebaseErrors {
         code: string;
         message: string;
@@ -28,8 +30,8 @@ const LoginComponent = () => {
 
     const onSubmit = async (data: TLoginSchema) => {
         try {
-            const res = await signInWithEmailAndPassword(FirebaseAuth, data.email, data.password);
-            console.log(res.user);
+            await signInWithEmailAndPassword(FirebaseAuth, data.email, data.password);
+            router.push('/');
         } catch (error) {
             if ((error as FirebaseErrors).message === 'Firebase: Error (auth/invalid-credential).') {
                 setLoginError('Problem with email or password');

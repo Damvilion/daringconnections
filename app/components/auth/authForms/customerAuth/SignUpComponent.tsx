@@ -76,7 +76,7 @@ const SignUpComponent = () => {
             .finally(() => setLoading(false));
     };
     return (
-        <div className='border-slate-900 border-solid border rounded-md shadow-md p-3 sm:p-4 md:p-7 lg:p-10'>
+        <div className='border-slate-900 border-solid border rounded-md shadow-md p-3 sm:p-4 md:p-7 lg:p-10 mb-3'>
             <h1 className='font-bold text-purple-800 text-medium md:text-xl'>Create Your Free Account!</h1>
             <p className='text-xs md:text-base my-1'>
                 You must be over <strong>18</strong> years old to register

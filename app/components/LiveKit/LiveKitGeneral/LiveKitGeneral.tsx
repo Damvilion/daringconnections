@@ -27,6 +27,7 @@ const LiveKitGeneral = () => {
             video={false}
             audio={false}
             token={token}
+            connect={false}
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
             // Use the default LiveKit theme for nice styles.
             // data-lk-theme='default'

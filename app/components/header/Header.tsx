@@ -3,7 +3,7 @@ import NavBar from './NavBar';
 
 const Header = () => {
     return (
-        <header>
+        <header className='mb-auto'>
             {/* <h1>Header</h1> */}
             <NavBar />
         </header>
