@@ -6,12 +6,12 @@ import { Separator } from '@/app/components/shadCn/ui/separator';
 import CustomerInfoCard from './CustomerInfoCard';
 import CustomerCardContent from './CustomerCardContent';
 
-import { jotai, userAtom } from '@/app/jotai_store/store';
+import { jotai, current_user } from '@/app/jotai_store/store';
 import { useRouter } from 'next/navigation';
 
 const MainCard = () => {
     const router = useRouter();
-    const [user] = jotai.useAtom(userAtom);
+    const [user] = jotai.useAtom(current_user);
     const handleClick = () => {
         if (!user) {
             router.push('/signup');
