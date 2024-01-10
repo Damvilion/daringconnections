@@ -9,6 +9,7 @@ import { TLoginSchema, customerLoginSchema } from '@/app/lib/types/types';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseAuth } from '@/app/firebase/firebase-config';
 import { useRouter } from 'next/navigation';
+import { Loader2 } from 'lucide-react';
 
 const LoginComponent = () => {
     const router = useRouter();
@@ -87,6 +88,7 @@ const LoginComponent = () => {
 
                 <div className='w-full mx-auto'>
                     <ShadButton type='submit' className='bg-[#c743d8] text-white shadow-lg hover:bg-[#c764d4]'>
+                        {isSubmitting && <Loader2 className='animate-spin' size={18} />}
                         Log in
                     </ShadButton>
                 </div>
