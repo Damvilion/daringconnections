@@ -14,12 +14,12 @@ const Chatbox = () => {
                     <Separator className='my-2' />
 
                     {tags.map((tag) => (
-                        <>
+                        <div className='' key={tag}>
                             <div key={tag} className='text-sm my-1'>
                                 {tag}
                             </div>
                             {/* <Separator className='my-2' /> */}
-                        </>
+                        </div>
                     ))}
                 </div>
             </ScrollArea>

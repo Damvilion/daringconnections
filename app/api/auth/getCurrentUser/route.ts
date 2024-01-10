@@ -8,8 +8,8 @@ export async function POST(request: Request) {
         dareCoins: number;
         email?: string;
     };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const user = await request.json();
-    console.log(user);
 
     // const profile = await prisma_db.user.findUnique({
     //     where: {

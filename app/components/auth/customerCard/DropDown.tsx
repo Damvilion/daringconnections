@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     DropdownMenuContent,
     DropdownMenuItem,
@@ -7,30 +7,22 @@ import {
 } from '@/app/components/shadCn/ui/dropdown-menu';
 import { signOut } from 'firebase/auth';
 import { FirebaseAuth } from '@/app/firebase/firebase-config';
-import { current_profile } from '@/app/lib/current-profile';
 import { useRouter } from 'next/navigation';
+import { jotai, userAtom } from '@/app/jotai_store/store';
 
 const DropDown = () => {
     const router = useRouter();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const getUser = async () => {
-        const user = await current_profile();
-        if (!user) return;
-        setIsLoggedIn(true);
-    };
-    getUser();
+    const [user, setUser] = jotai.useAtom(userAtom);
 
     const handleLogout = async () => {
-        const res = await signOut(FirebaseAuth);
-        console.log(res);
-        setIsLoggedIn(false);
+        await signOut(FirebaseAuth);
+        setUser(null);
         router.refresh();
     };
 
     return (
         <DropdownMenuContent>
-            {isLoggedIn ? (
+            {user ? (
                 <DropdownMenuItem onClick={handleLogout} className='text-center mx-auto'>
                     Sign out
                 </DropdownMenuItem>

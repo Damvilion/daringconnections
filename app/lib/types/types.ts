@@ -1,5 +1,12 @@
 import { z } from 'zod';
 
+export type Profile = {
+    id: string;
+    username: string;
+    dareCoins: number;
+    email?: string;
+};
+
 export const customerSignUpSchema = z
     .object({
         email: z.string().email('Invalid email address'),
