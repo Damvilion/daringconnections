@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 const MainCard = () => {
     return (
-        <Card className='absolute m-2'>
+        <Card className='absolute ml-3'>
             <CardHeader className=''>
                 <div className='flex items-center px-5 gap-1'>
                     <Avatar>

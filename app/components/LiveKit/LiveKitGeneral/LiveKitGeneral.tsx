@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
 import LiveKitGeneralRoom from './LiveKitGeneralRoom';
+import { Button } from '../../shadCn/ui/button';
 
 const LiveKitGeneral = () => {
     // Fetched from redis
@@ -32,6 +33,10 @@ const LiveKitGeneral = () => {
             // style={{ height: '100dvh' }}
         >
             <LiveKitGeneralRoom />
+            <div className='flex justify-evenly w-full mt-1'>
+                <Button className='ml-1 rounded-full bg-purple-500'>Prev</Button>
+                <Button className='ml-1 rounded-full bg-purple-500'>Next</Button>
+            </div>
         </LiveKitRoom>
     );
 };
