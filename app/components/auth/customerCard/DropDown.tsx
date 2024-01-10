@@ -8,11 +8,11 @@ import {
 import { signOut } from 'firebase/auth';
 import { FirebaseAuth } from '@/app/firebase/firebase-config';
 import { useRouter } from 'next/navigation';
-import { jotai, userAtom } from '@/app/jotai_store/store';
+import { jotai, current_user } from '@/app/jotai_store/store';
 
 const DropDown = () => {
     const router = useRouter();
-    const [user, setUser] = jotai.useAtom(userAtom);
+    const [user, setUser] = jotai.useAtom(current_user);
 
     const handleLogout = async () => {
         await signOut(FirebaseAuth);

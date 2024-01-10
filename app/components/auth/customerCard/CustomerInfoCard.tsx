@@ -5,11 +5,11 @@ import { Avatar, AvatarImage } from '@/app/components/shadCn/ui/avatar';
 import { DropdownMenu, DropdownMenuTrigger } from '@/app/components/shadCn/ui/dropdown-menu';
 import DropDown from './DropDown';
 import CardSkeleton from './CardSkeleton';
-import { jotai, loadingUser, userAtom } from '@/app/jotai_store/store';
+import { jotai, loadingUser, current_user } from '@/app/jotai_store/store';
 
 const CustomerInfoCard = () => {
     const [loading] = jotai.useAtom(loadingUser);
-    const [user] = jotai.useAtom(userAtom);
+    const [user] = jotai.useAtom(current_user);
 
     return (
         <CardHeader className=''>

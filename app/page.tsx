@@ -7,11 +7,11 @@ import { useEffect } from 'react';
 import { current_profile } from './lib/current-profile';
 import { Profile } from '@/app/lib/types/types';
 
-import { jotai, userAtom, loadingUser } from '@/app/jotai_store/store';
+import { jotai, current_user, loadingUser } from '@/app/jotai_store/store';
 
 export default function Home() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [user, setUser] = jotai.useAtom(userAtom);
+    const [user, setUser] = jotai.useAtom(current_user);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = jotai.useAtom(loadingUser);
 
