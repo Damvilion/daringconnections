@@ -16,7 +16,7 @@ export const current_profile = () => {
     return new Promise((resolve) => {
         onAuthStateChanged(FirebaseAuth, async (user) => {
             if (user) {
-                const response: axiosResponses = await axios.post('/api/auth/getCurrentUser', { uid: user.uid });
+                const response: axiosResponses = await axios.post('/api/auth/getCurrentUser', { id: user.uid });
                 resolve(response.data.profile);
             } else {
                 resolve(null);
