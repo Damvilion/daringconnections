@@ -13,25 +13,32 @@ generator client {
 
 // Clients
 model User {
-  id        String   @id @default(uuid())
+  id        String   @id @unique @default(uuid())
   username  String   @unique
   email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relationship: User follows CamUser
-  following CamUser[] @relation("FollowRelation")
-  dareCoins Int       @default(0)
+  following   CamUser[] @relation("FollowRelation")
+  connections CamUser[] @relation("ConnectionRelation")
+
+  Offer Offer[] @relation("userOffer")
+
+  dareCoins Int @default(0)
 }
 
 // Influencers
 model CamUser {
-  id       String @id @default(uuid())
+  id       String @id @unique @default(uuid())
   name     String
   userName String @unique
   email    String @unique
 
-  followedBy User[] @relation("FollowRelation")
+  followedBy  User[] @relation("FollowRelation")
+  connectedTo User[] @relation("ConnectionRelation")
+
+  offer Offer[] @relation("offeredUser")
 
   Video     Video[]
   Channel   Channel?
@@ -39,6 +46,25 @@ model CamUser {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Offer {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  tip         Int
+
+  owner   User   @relation("userOffer", fields: [ownerId], references: [id])
+  ownerId String
+
+  offeredTo   CamUser @relation("offeredUser", fields: [offeredToId], references: [id])
+  offeredToId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ownerId])
+  @@index([offeredToId])
 }
 
 model Channel {
