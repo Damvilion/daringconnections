@@ -6,13 +6,15 @@ import { Separator } from '@/app/components/shadCn/ui/separator';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TLoginSchema, customerLoginSchema } from '@/app/lib/types/types';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { FirebaseAuth } from '@/app/firebase/firebase-config';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { FirebaseAuth, FirebaseGoogleAuthProvider } from '@/app/firebase/firebase-config';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import axios from 'axios';
 
 const LoginComponent = () => {
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
     interface FirebaseErrors {
         code: string;
         message: string;
@@ -41,6 +43,38 @@ const LoginComponent = () => {
         }
         console.log(data);
         reset();
+    };
+
+    const signINWithGoogle = () => {
+        setLoading(true);
+        signInWithPopup(FirebaseAuth, FirebaseGoogleAuthProvider)
+            .then((result) => {
+                if (result.user) {
+                    setLoading(false);
+
+                    const { displayName, email, photoURL, uid } = result.user;
+                    try {
+                        axios.post('/api/auth/customerSignUp', { username: displayName, email, photoURL, uid, type: 'google' }).then(() => {
+                            router.push('/');
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+
+                console.log(errorCode, errorMessage, email, credential);
+                // ...
+            })
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -83,6 +117,7 @@ const LoginComponent = () => {
                             id='password'
                         />
                         {loginError === 'Problem with email or password' && <span className='text-xs text-red-500'>{loginError}</span>}
+                        {errors.password && <span className='text-xs text-red-500'>{errors.password.message}</span>}
                     </div>
                 </div>
 
@@ -105,18 +140,14 @@ const LoginComponent = () => {
                 <div className='w-full'>
                     <ShadButton
                         type='button'
-                        // onClick={signINWithGoogle}
+                        onClick={signINWithGoogle}
                         // className='rounded-full border-solid border-2 border-black text-black bg-white mx-auto hover:bg-white'
                         variant='googleButton'>
+                        {loading && <Loader2 className='animate-spin' size={18} />}
                         Sign In With Google
                     </ShadButton>
                 </div>
-
-                {/* <div className='text-xs w-full text-center'>SIGN IN WITH GOOGLE PLACEHOLDER</div> */}
             </form>
-            {/* <ShadButton onClick={logUser} className='mx-auto bg-[#f15daf] text-white shadow-lg hover:bg-[#c764d4]'>
-                Log User
-            </ShadButton> */}
         </div>
     );
 };
