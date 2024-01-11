@@ -10,7 +10,7 @@ const Chatbox = () => {
         <div className='mr-auto ml-auto w-[80%] lg:w-auto my-2'>
             <ScrollArea className='h-[200px] sm:h-[300px] md:h-[400px] rounded-md border px-10 my-2'>
                 <div className='px-10 py-4'>
-                    <h4 className='mb-4 text-sm font-medium leading-none'>Welcome to my live chat room</h4>
+                    <h1 className='mb-4 font-bold leading-none text-lg text-center'>Welcome to my live chat room</h1>
                     <Separator className='my-2' />
 
                     {tags.map((tag) => (
