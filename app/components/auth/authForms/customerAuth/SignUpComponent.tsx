@@ -36,10 +36,13 @@ const SignUpComponent = () => {
     const onSubmit = async (data: TSignUpSchema) => {
         try {
             const res: AxiosResponseAdd = await axios.post('/api/auth/customerSignUp', data);
+            console.log(res.data);
             if (res.data.message === 'ISSUE') {
                 setErrorType(res.data.type);
+                return;
             } else if (res.data.message === 'FAILED') {
                 setErrorType('FAILED');
+                return;
             } else if (res.data.message === 'SUCCESS') {
                 setErrorType('');
             }
@@ -55,10 +58,18 @@ const SignUpComponent = () => {
         setLoading(true);
         signInWithPopup(FirebaseAuth, FirebaseGoogleAuthProvider)
             .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
                 if (result.user) {
                     setLoading(false);
-                    router.push('/');
+                    const { displayName, email, photoURL, uid } = result.user;
+                    try {
+                        axios.post('/api/auth/customerSignUp', { username: displayName, email, photoURL, uid, type: 'google' }).then((res) => {
+                            console.log(res);
+                            router.push('/');
+                        });
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    // router.push('/');
                 }
             })
             .catch((error) => {
