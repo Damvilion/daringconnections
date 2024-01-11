@@ -1,6 +1,6 @@
 import { atom, useAtom } from 'jotai';
 
-import { Profile } from '../lib/types/types';
+import { Profile } from '@/app/lib/types/types';
 
 const current_user = atom<null | Profile>(null);
 const loadingUser = atom<boolean>(true);
