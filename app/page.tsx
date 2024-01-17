@@ -1,10 +1,10 @@
 'use client';
-import LiveKitGeneral from './components/LiveKit/LiveKitGeneral/LiveKitGeneral';
+import LiveKitGeneral from '@/app/components/LiveKit/LiveKitGeneral/LiveKitGeneral';
 import MainCard from '@/app/components/auth/customerCard/MainCard';
-import Header from './components/header/Header';
-import Chatbox from './components/chatroom/Chatbox';
+import Header from '@/app/components/header/Header';
+import Chatbox from '@/app/components/chatroom/Chatbox';
 import { useEffect } from 'react';
-import { current_profile } from './lib/current-profile';
+import { current_profile } from '@/app/lib/current-profile';
 import { Profile } from '@/app/lib/types/types';
 
 import { jotai, current_user, loadingUser } from '@/app/jotai_store/store';

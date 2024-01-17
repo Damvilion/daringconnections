@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
 import LiveKitGeneralRoom from './LiveKitGeneralRoom';
-import { Button } from '../../shadCn/ui/button';
+import { Button } from '@/app/components/shadCn/ui/button';
 
 const LiveKitGeneral = () => {
     // Fetched from redis
