@@ -23,7 +23,12 @@ model User {
   following   CamUser[] @relation("FollowRelation")
   connections CamUser[] @relation("ConnectionRelation")
 
+  friends  User[] @relation("FriendRelation")
+  friendOf User[] @relation("FriendRelation")
+
   Offer Offer[] @relation("userOffer")
+
+  isCamUser Boolean @default(false)
 
   dareCoins Int @default(0)
 }
