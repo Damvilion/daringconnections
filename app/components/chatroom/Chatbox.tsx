@@ -19,7 +19,10 @@ const Chatbox = () => {
                     {/* <p>Create a free account</p> */}
                     {tags.map((tag) => (
                         <div className='text-center' key={tag}>
-                            <div key={tag} className='text-sm my-1'>
+                            <div key={tag} className='text-left text-sm my-1'>
+                                {tag}
+                            </div>
+                            <div key={tag} className='text-right text-sm my-1'>
                                 {tag}
                             </div>
                             {/* <Separator className='my-2' /> */}
