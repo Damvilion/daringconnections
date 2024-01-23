@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TLoginSchema, customerLoginSchema } from '@/app/lib/types/types';
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { FirebaseAuth, FirebaseGoogleAuthProvider } from '@/app/firebase/firebase-config';
+import { FirebaseAuth, FirebaseGoogleAuthProvider } from '@/firebase/firebase-config';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import axios from 'axios';

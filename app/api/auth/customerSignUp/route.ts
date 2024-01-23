@@ -1,10 +1,10 @@
-import { FirebaseAuth } from '@/app/firebase/firebase-config';
+import { FirebaseAuth } from '@/firebase/firebase-config';
 import { prisma_db } from '@/app/lib/prismadb';
 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { NextResponse } from 'next/server';
 
-interface BodyType {
+export interface BodyType {
     email: string;
     username: string;
     password: string;

@@ -9,7 +9,7 @@ import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { Separator } from '@/app/components/shadCn/ui/separator';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { FirebaseAuth, FirebaseGoogleAuthProvider } from '@/app/firebase/firebase-config';
+import { FirebaseAuth, FirebaseGoogleAuthProvider } from '@/firebase/firebase-config';
 import { useRouter } from 'next/navigation';
 
 const SignUpComponent = () => {
@@ -69,7 +69,6 @@ const SignUpComponent = () => {
                     } catch (error) {
                         console.log(error);
                     }
-                    // router.push('/');
                 }
             })
             .catch((error) => {

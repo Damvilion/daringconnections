@@ -6,7 +6,7 @@ import {
     // DropdownMenuSeparator,
 } from '@/app/components/shadCn/ui/dropdown-menu';
 import { signOut } from 'firebase/auth';
-import { FirebaseAuth } from '@/app/firebase/firebase-config';
+import { FirebaseAuth } from '@/firebase/firebase-config';
 import { useRouter } from 'next/navigation';
 import { jotai, current_user } from '@/app/jotai_store/store';
 
