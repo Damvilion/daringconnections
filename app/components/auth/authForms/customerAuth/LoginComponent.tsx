@@ -19,7 +19,7 @@ const LoginComponent = () => {
         code: string;
         message: string;
     }
-    type LoginErrorType = 'Problem with email or password' | '';
+    type LoginErrorType = 'Problem finding email or password' | '';
 
     const [loginError, setLoginError] = useState<LoginErrorType>('');
     const {
@@ -37,7 +37,7 @@ const LoginComponent = () => {
             router.push('/');
         } catch (error) {
             if ((error as FirebaseErrors).message === 'Firebase: Error (auth/invalid-credential).') {
-                setLoginError('Problem with email or password');
+                setLoginError('Problem finding email or password');
             }
             console.log((error as FirebaseErrors).message);
         }
@@ -116,7 +116,7 @@ const LoginComponent = () => {
                             type='password'
                             id='password'
                         />
-                        {loginError === 'Problem with email or password' && <span className='text-xs text-red-500'>{loginError}</span>}
+                        {loginError === 'Problem finding email or password' && <span className='text-xs text-red-500'>{loginError}</span>}
                         {errors.password && <span className='text-xs text-red-500'>{errors.password.message}</span>}
                     </div>
                 </div>

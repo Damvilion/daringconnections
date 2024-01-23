@@ -23,7 +23,10 @@ export const customerSignUpSchema = z
 export type TSignUpSchema = z.infer<typeof customerSignUpSchema>;
 
 // Customer Login
-export const customerLoginSchema = z.object({ email: z.string().email('Invalid email address'), password: z.string().min(7) });
+export const customerLoginSchema = z.object({
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(7, 'Password must be at least 7 characters'),
+});
 export type TLoginSchema = z.infer<typeof customerLoginSchema>;
 
 export const influencerSignUpSchema = z
