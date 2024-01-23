@@ -28,26 +28,30 @@ model User {
 
   Offer Offer[] @relation("userOffer")
 
-  isCamUser Boolean @default(false)
+  isCamUser  Boolean  @default(false)
+  camProfile CamUser? @relation("ProfileRelation")
 
-  dareCoins Int @default(0)
+  customerDareCoins Int @default(0)
 }
 
 // Influencers
 model CamUser {
   id       String @id @unique @default(uuid())
   name     String
-  userName String @unique
+  username String @unique
   email    String @unique
+
+  userProfile   User   @relation("ProfileRelation", fields: [userProfileId], references: [id])
+  userProfileId String @unique
 
   followedBy  User[] @relation("FollowRelation")
   connectedTo User[] @relation("ConnectionRelation")
 
   offer Offer[] @relation("offeredUser")
 
-  Video     Video[]
-  Channel   Channel?
-  dareCoins Int      @default(0)
+  Video               Video[]
+  Channel             Channel?
+  influencerDareCoins Int      @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -77,7 +81,7 @@ model Channel {
   name        String @unique
   description String
 
-  owner CamUser @relation(fields: [name], references: [userName])
+  owner CamUser @relation(fields: [name], references: [username])
 
   Video Video[]
 
