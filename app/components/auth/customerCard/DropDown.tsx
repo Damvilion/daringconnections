@@ -20,16 +20,39 @@ const DropDown = () => {
         router.refresh();
     };
 
+    const handleChannel = () => {
+        router.push('/account/channel');
+    };
+
+    const renderSignOutMenuItem = () => (
+        <DropdownMenuItem onClick={handleLogout} className='text-center mx-auto'>
+            Sign out
+        </DropdownMenuItem>
+    );
+
+    const renderChannelMenuItem = () => (
+        <DropdownMenuItem onClick={handleChannel} className='text-center mx-auto'>
+            Channel
+        </DropdownMenuItem>
+    );
+
+    const renderCreateAccountMenuItem = () => (
+        <DropdownMenuItem onClick={() => router.push('/signup')} className='text-center mx-auto'>
+            Create an account
+        </DropdownMenuItem>
+    );
+
     return (
         <DropdownMenuContent>
-            {user ? (
-                <DropdownMenuItem onClick={handleLogout} className='text-center mx-auto'>
-                    Sign out
-                </DropdownMenuItem>
+            {user?.isCamUser ? (
+                <div>
+                    {renderSignOutMenuItem()}
+                    {renderChannelMenuItem()}
+                </div>
+            ) : user ? (
+                renderSignOutMenuItem()
             ) : (
-                <DropdownMenuItem onClick={() => router.push('/signup')} className='text-center mx-auto'>
-                    Create an account
-                </DropdownMenuItem>
+                renderCreateAccountMenuItem()
             )}
         </DropdownMenuContent>
     );
