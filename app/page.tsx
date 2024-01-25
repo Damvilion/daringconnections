@@ -1,13 +1,13 @@
 'use client';
 import LiveKitGeneral from '@/app/components/LiveKit/LiveKitGeneral/LiveKitGeneral';
 import MainCard from '@/app/components/auth/customerCard/MainCard';
-import Header from '@/app/components/header/Header';
 import Chatbox from '@/app/components/chatroom/Chatbox';
 import { useEffect } from 'react';
 import { current_profile } from '@/app/lib/current-profile';
 import { Profile } from '@/app/lib/types/types';
 
 import { jotai, current_user, loadingUser } from '@/app/jotai_store/store';
+import AuthNav from './components/auth/nav/AuthNav';
 
 export default function Home() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,7 +33,9 @@ export default function Home() {
 
     return (
         <main>
-            <Header />
+            <header>
+                <AuthNav />
+            </header>
             <div className='flex flex-col gap-1 lg:flex-row items-center justify-between'>
                 <MainCard />
                 <LiveKitGeneral />
