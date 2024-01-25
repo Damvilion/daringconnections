@@ -16,7 +16,7 @@ const CustomerInfoCard = () => {
             {loading ? (
                 <CardSkeleton />
             ) : (
-                <div className='flex items-center px-5 gap-1'>
+                <div className='flex items-center px-1 md:px-5 gap-1'>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Avatar>
