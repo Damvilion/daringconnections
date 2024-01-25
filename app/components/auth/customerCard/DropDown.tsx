@@ -38,7 +38,12 @@ const DropDown = () => {
 
     const renderCreateAccountMenuItem = () => (
         <DropdownMenuItem onClick={() => router.push('/signup')} className='text-center mx-auto'>
-            Create an account
+            Create free account
+        </DropdownMenuItem>
+    );
+    const renderLoginAccountMenuItem = () => (
+        <DropdownMenuItem onClick={() => router.push('/login')} className='text-center mx-auto'>
+            Login
         </DropdownMenuItem>
     );
 
@@ -52,7 +57,10 @@ const DropDown = () => {
             ) : user ? (
                 renderSignOutMenuItem()
             ) : (
-                renderCreateAccountMenuItem()
+                <div>
+                    {renderCreateAccountMenuItem()}
+                    {renderLoginAccountMenuItem()}
+                </div>
             )}
         </DropdownMenuContent>
     );
