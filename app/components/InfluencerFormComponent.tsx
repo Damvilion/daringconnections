@@ -43,7 +43,7 @@ const InfluencerFormComponent = () => {
                 return;
             } else if (res.data.message === 'SUCCESS') {
                 setErrorType('');
-                router.push('/account/channel');
+                router.push('/login');
             }
         } catch (error) {
             setErrorType('FAILED');

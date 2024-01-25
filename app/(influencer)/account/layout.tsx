@@ -16,8 +16,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     useEffect(() => {
         const getProfile = async () => {
             const profile: Profile = (await current_profile()) as Profile;
-
-            if (!profile.isCamUser) {
+            if (!profile) {
+                router.push('/login');
+            } else if (!profile.isCamUser) {
                 router.push('/');
             } else {
                 setLoading(false);
