@@ -21,7 +21,7 @@ const ConnectButton = () => {
                     Connect
                     <TooltipContent side='bottom'>
                         <div className='flex flex-col gap-1'>
-                            <span className='text-center text-sm'>1 on 1 video calls - direct message & more</span>
+                            <span className='text-center text-sm'>Direct message - 1 on 1 video calls & more</span>
                         </div>
                     </TooltipContent>
                 </TooltipTrigger>
