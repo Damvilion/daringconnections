@@ -26,6 +26,8 @@ model User {
   friends  User[] @relation("FriendRelation")
   friendOf User[] @relation("FriendRelation")
 
+  profileUrl String?
+
   Offer Offer[] @relation("userOffer")
 
   isCamUser  Boolean  @default(false)
