@@ -6,6 +6,7 @@ export type Profile = {
     dareCoins: number;
     email?: string;
     isCamUser: boolean;
+    profileUrl?: string;
 };
 
 export const customerSignUpSchema = z
@@ -33,7 +34,11 @@ export const influencerSignUpSchema = z
     .object({
         email: z.string().email('Invalid email address'),
         name: z.string().min(4, 'Name must be at least 4 characters').max(20, 'Name must be less than 20 characters'),
-        username: z.string().min(5, 'Username must be at least 5 characters').max(20, 'UserName must be less than 20 characters'),
+        username: z
+            .string()
+            .min(5, 'Username must be at least 5 characters')
+            .max(20, 'UserName must be less than 20 characters')
+            .refine((data) => !/\s/.test(data), { message: 'Username must not contain spaces' }),
         password: z.string().min(8, 'Password must be at least 8 characters'),
         confirmPassword: z.string(),
         over18: z.boolean().refine((data) => data, { message: 'You must be over 18' }),

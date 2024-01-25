@@ -1,14 +1,9 @@
 import { FirebaseAuth } from '@/firebase/firebase-config';
 import { onAuthStateChanged } from 'firebase/auth';
 import axios, { AxiosResponse } from 'axios';
+import { Profile } from './types/types';
 
 export const current_profile = () => {
-    type Profile = {
-        id: string;
-        username: string;
-        dareCoins: number;
-        email?: string;
-    };
     type axiosData = { message: string; profile: Profile };
     interface axiosResponses extends AxiosResponse {
         data: axiosData;
