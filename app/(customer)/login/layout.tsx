@@ -9,7 +9,7 @@ const Layout: React.FC<LayoutProps> = async ({ children }) => {
     return (
         <main>
             <Header />
-            <main className='flex flex-col min-h-screen items-center justify-center'>{children}</main>
+            <main className='flex h-screen justify-center mt-3'>{children}</main>
         </main>
     );
 };
