@@ -8,7 +8,7 @@ const Chatbox = () => {
     const tags = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);
     return (
         <div className='mr-auto ml-auto lg:mr-2 w-[80%] lg:w-auto my-2 px-10'>
-            <ScrollArea className='h-[200px] sm:h-[300px] md:h-[400px] rounded-md border my-2'>
+            <ScrollArea className=' h-[40vh] sm:h-[45vh] md:h-[50vh] lg:h-[70vh] rounded-md border my-2'>
                 <div className='px-10 py-4'>
                     <h1 className='mb-4 font-bold leading-none text-lg text-center'>Welcome to my live chat room</h1>
                     <p className='text-sm text-center'>Type in the box to chat with me.</p>

@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Button } from '../shadCn/ui/button';
-import { LiveKitRoom, useLocalParticipant, useTracks } from '@livekit/components-react';
+import { LiveKitRoom, useConnectionState, useLocalParticipant } from '@livekit/components-react';
 import { LocalAudioTrack, LocalVideoTrack, Track } from 'livekit-client';
 import { current_user, jotai, liveKitConnection, microphoneConnection } from '@/app/jotai_store/store';
 import { current_profile } from '@/app/lib/current-profile';
@@ -53,44 +53,15 @@ const ChannelComponent: React.FC = () => {
 
 const LiveRoom = () => {
     const localParticipant = useLocalParticipant();
-    const [mediaSteam, setMediaStream] = useState<MediaStream | null>(null);
+
     const videoRef = React.useRef<HTMLVideoElement>(null);
     const [connected, setConnected] = jotai.useAtom(liveKitConnection);
     const [disabled, setDisabled] = useState(true);
 
-    const asignMedia = (mediaSteam: MediaStream) => {
-        videoRef.current!.srcObject = mediaSteam;
-    };
+    const connectionState = useConnectionState();
 
-    const turnOnWebcam = async () => {
-        if (mediaSteam) return;
-        getMedia().then(() => {
-            publishVideoTrack(mediaSteam!);
-        });
-    };
-
-    const turnOnMic = async () => {
-        if (audioStream) return;
-        getAudio().then(() => {
-            publishAudioTrack(audioStream!);
-        });
-    };
-    const unPublushVideoTrack = async () => {
-        if (!connected && mediaSteam) {
-            setMediaStream(null);
-            return;
-        }
-        if (!mediaSteam) return;
-        try {
-            await localParticipant.localParticipant.unpublishTrack(mediaSteam!.getVideoTracks()[0]);
-            setMediaStream(null);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
-    const publishVideoTrack = async (res: MediaStream) => {
-        if (!res) return;
+    const publishVideo = async (res: MediaStream) => {
+        if (connectionState !== 'connected') return;
         try {
             const localVideoTrack = new LocalVideoTrack(res!.getVideoTracks()[0]);
             await localParticipant.localParticipant.publishTrack(localVideoTrack, { source: Track.Source.Camera });
@@ -98,9 +69,8 @@ const LiveRoom = () => {
             console.error(e);
         }
     };
-
-    const publishAudioTrack = async (res: MediaStream) => {
-        if (!res) return;
+    const publishAudio = async (res: MediaStream) => {
+        if (connectionState !== 'connected') return;
         try {
             const localAudioTrack = new LocalAudioTrack(res!.getAudioTracks()[0]);
             await localParticipant.localParticipant.publishTrack(localAudioTrack, { source: Track.Source.Microphone });
@@ -109,37 +79,25 @@ const LiveRoom = () => {
         }
     };
 
-    const unPublishAudioTrack = async () => {
-        if (!connected && audioStream) {
-            setAudioStream(null);
-            return;
-        }
-        if (!audioStream) return;
-        try {
-            await localParticipant.localParticipant.unpublishTrack(audioStream!.getAudioTracks()[0]);
-            setAudioStream(null);
-        } catch (e) {
-            console.error(e);
-        }
+    const asignMedia = (mediaSteam: MediaStream) => {
+        videoRef.current!.srcObject = mediaSteam;
     };
 
     const connectToLiveKit = () => {
-        if (connected && mediaSteam) {
+        if (connected) {
             setConnected(false);
-            getMedia();
-            return;
-        } else if (connected && !mediaSteam) {
-            setConnected(false);
-            return;
+        } else if (!connected) {
+            setConnected(true);
         }
-        setConnected(true);
     };
+    const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
 
-    const getMedia = async () => {
+    const getVideo = async () => {
         try {
             const res = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
             if (res) {
-                setMediaStream(res);
+                setVideoStream(res);
+                return res;
             }
         } catch (e) {
             console.error(e);
@@ -153,14 +111,74 @@ const LiveRoom = () => {
             const res = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
             if (res) {
                 setAudioStream(res);
+                return res;
             }
         } catch (e) {
             console.error(e);
         }
     };
+    const unPublishAudio = async () => {
+        if (connectionState !== 'connected') return;
+        try {
+            await localParticipant.localParticipant.unpublishTrack(audioStream!.getAudioTracks()[0]);
+            setAudioStream(null);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+    const unPublishVideo = async () => {
+        if (connectionState !== 'connected') return;
+        try {
+            await localParticipant.localParticipant.unpublishTrack(videoStream!.getVideoTracks()[0]);
+            setVideoStream(null);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const toggleWebcam = async () => {
+        if (videoStream) {
+            unPublishVideo();
+            setVideoStream(null);
+        } else if (!videoStream) {
+            getVideo().then((res: MediaStream | undefined) => {
+                if (!res) return;
+                publishVideo(res);
+            });
+        }
+    };
+
+    const toggleMic = async () => {
+        if (audioStream) {
+            unPublishAudio();
+            setAudioStream(null);
+        } else if (!audioStream) {
+            getAudio().then((res: MediaStream | undefined) => {
+                if (!res) return;
+                publishAudio(res);
+            });
+        }
+    };
 
     useEffect(() => {
-        getMedia();
+        console.log(connectionState);
+        if (connectionState === 'connected') {
+            if (videoStream) {
+                publishVideo(videoStream);
+            }
+            if (audioStream) {
+                publishAudio(audioStream);
+            }
+            // Push to redis database
+        } else if (connectionState === 'disconnected') {
+            getVideo();
+            getAudio();
+            // Remove from redis database
+        }
+    }, [connectionState]);
+
+    useEffect(() => {
+        getVideo();
         getAudio();
 
         setTimeout(() => {
@@ -169,63 +187,38 @@ const LiveRoom = () => {
     }, []);
 
     useEffect(() => {
-        asignMedia(mediaSteam!);
-    }, [mediaSteam]);
+        asignMedia(videoStream!);
+    }, [videoStream]);
 
-    const videoTrack = useTracks([Track.Source.Camera]);
-    const audioTrack = useTracks([Track.Source.Microphone]);
+    // Disables the buttons for 1 second after toggling to discourage spamming
+    const [disabledMic, setDisabledMic] = useState(false);
+    const [disabledCam, setDisabledCam] = useState(false);
 
     useEffect(() => {
-        if (connected) {
-            setTimeout(() => {
-                if (videoTrack.length < 1) {
-                    publishVideoTrack(mediaSteam!);
-                }
-                if (audioTrack.length < 1) {
-                    publishAudioTrack(audioStream!);
-                }
-            }, 1000);
-        }
-    }, [mediaSteam, audioStream, connected]);
+        setDisabledMic(true);
+        setDisabledCam(true);
 
-    // const tracks = useTracks();
-    // const logTracks = () => {
-    //     console.log(tracks);
-    // };
-
-    const toggleWebcam = () => {
-        if (mediaSteam) {
-            unPublushVideoTrack();
-        } else if (!mediaSteam) {
-            turnOnWebcam();
-        }
-    };
-
-    const toggleMicrophone = () => {
-        if (audioStream) {
-            unPublishAudioTrack();
-        } else if (!audioStream) {
-            turnOnMic();
-        }
-    };
-
+        setTimeout(() => {
+            setDisabledMic(false);
+            setDisabledCam(false);
+        }, 1000);
+    }, [videoStream, audioStream]);
     return (
-        <div className='h-full'>
+        <div className=''>
             <div className='mx-1 flex flex-col items-center md:flex-row'>
                 <div className='flex-grow'>
                     <video ref={videoRef} autoFocus={false} controls={false} muted autoPlay playsInline className='bg-slate-600 w-full'></video>
 
                     <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
-                        <div className='cursor-pointer' onClick={toggleWebcam}>
-                            {/* <img src='/assets/ifluencer_cam_icons/camerablack.png' alt='camera logo' className='w-8' /> */}
+                        <Button onClick={toggleWebcam} disabled={disabledCam}>
+                            {!videoStream && <img src='/assets/ifluencer_cam_icons/camerared.png' alt='camera logo' className='w-8' />}
+                            {videoStream && <img src='/assets/ifluencer_cam_icons/camerawhite.png' alt='camera logo' className='w-8' />}
+                        </Button>
 
-                            {!mediaSteam && <img src='/assets/ifluencer_cam_icons/camerared.png' alt='camera logo' className='w-8' />}
-                            {mediaSteam && <img src='/assets/ifluencer_cam_icons/camerawhite.png' alt='camera logo' className='w-8' />}
-                        </div>
-                        <div className='cursor-pointer' onClick={toggleMicrophone}>
+                        <Button onClick={toggleMic} disabled={disabledMic}>
                             {!audioStream && <img src='/assets/ifluencer_cam_icons/micred.png' alt='camera logo' className='w-8' />}
                             {audioStream && <img src='/assets/ifluencer_cam_icons/micwhite.png' alt='camera logo' className='w-8' />}
-                        </div>
+                        </Button>
 
                         <Button onClick={connectToLiveKit} disabled={disabled} variant={connected ? 'destructive' : 'secondary'}>
                             {!connected && <p>Go Live</p>}

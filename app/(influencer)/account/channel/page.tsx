@@ -4,10 +4,10 @@ import React from 'react';
 
 const Page = () => {
     return (
-        <div className='h-screen w-full'>
+        <main>
             <ChannelHeader />
             <ChannelComponent />
-        </div>
+        </main>
     );
 };
 
