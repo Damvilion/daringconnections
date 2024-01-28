@@ -12,8 +12,11 @@ export const current_profile = () => {
         onAuthStateChanged(FirebaseAuth, async (user) => {
             if (user) {
                 const response: axiosResponses = await axios.post('/api/auth/getCurrentUser', { id: user.uid });
-
-                resolve(response.data.profile);
+                if (response.data.profile) {
+                    resolve(response.data.profile);
+                } else {
+                    resolve(null);
+                }
             } else {
                 resolve(null);
             }
