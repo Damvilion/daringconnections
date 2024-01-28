@@ -10,10 +10,9 @@ import { jotai, current_user, loadingUser } from '@/app/jotai_store/store';
 import AuthNav from './components/auth/nav/AuthNav';
 
 export default function Home() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [user, setUser] = jotai.useAtom(current_user);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [loading, setLoading] = jotai.useAtom(loadingUser);
+    const [, setUser] = jotai.useAtom(current_user);
+
+    const [, setLoading] = jotai.useAtom(loadingUser);
 
     const getUser = async () => {
         const user: Profile = (await current_profile()) as Profile;
