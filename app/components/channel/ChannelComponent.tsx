@@ -8,6 +8,7 @@ import { current_profile } from '@/app/lib/current-profile';
 import { useRouter } from 'next/navigation';
 import { Profile } from '@/app/lib/types/types';
 import ChannelChatbox from './ChannelChatbox';
+import axios from 'axios';
 
 const ChannelComponent: React.FC = () => {
     const router = useRouter();
@@ -52,6 +53,7 @@ const ChannelComponent: React.FC = () => {
 };
 
 const LiveRoom = () => {
+    const [currentUser] = jotai.useAtom(current_user);
     const localParticipant = useLocalParticipant();
 
     const videoRef = React.useRef<HTMLVideoElement>(null);
@@ -160,8 +162,21 @@ const LiveRoom = () => {
         }
     };
 
+    const updateDatabase = async (type: string, username: string | undefined) => {
+        if (type === 'online') {
+            await axios.post('/api/influencer/addtodatabase', {
+                type: 'online',
+                username: username,
+            });
+        } else if (type === 'offline') {
+            await axios.post('/api/influencer/addtodatabase', {
+                type: 'offline',
+                username: username,
+            });
+        }
+    };
+
     useEffect(() => {
-        console.log(connectionState);
         if (connectionState === 'connected') {
             if (videoStream) {
                 publishVideo(videoStream);
@@ -169,11 +184,13 @@ const LiveRoom = () => {
             if (audioStream) {
                 publishAudio(audioStream);
             }
+            updateDatabase('online', currentUser?.username);
             // Push to redis database
         } else if (connectionState === 'disconnected') {
             getVideo();
             getAudio();
-            // Remove from redis database
+
+            updateDatabase('offline', currentUser?.username);
         }
     }, [connectionState]);
 
@@ -204,7 +221,7 @@ const LiveRoom = () => {
         }, 1000);
     }, [videoStream, audioStream]);
     return (
-        <div className=''>
+        <div>
             <div className='mx-1 flex flex-col items-center md:flex-row'>
                 <div className='flex-grow'>
                     <video ref={videoRef} autoFocus={false} controls={false} muted autoPlay playsInline className='bg-slate-600 w-full'></video>
