@@ -65,7 +65,7 @@ const LiveRoom = () => {
     const publishVideo = async (res: MediaStream) => {
         if (connectionState !== 'connected') return;
         try {
-            const localVideoTrack = new LocalVideoTrack(res!.getVideoTracks()[0]);
+            const localVideoTrack = new LocalVideoTrack(res!.getVideoTracks()[0], { aspectRatio: 16 / 9, height: 720, width: 1280 });
             await localParticipant.localParticipant.publishTrack(localVideoTrack, { source: Track.Source.Camera });
         } catch (e) {
             console.error(e);
