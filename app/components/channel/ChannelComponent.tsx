@@ -83,6 +83,7 @@ const LiveRoom = () => {
     };
 
     const asignMedia = (mediaSteam: MediaStream) => {
+        console.log(mediaSteam);
         videoRef.current!.srcObject = mediaSteam;
     };
 
@@ -97,12 +98,12 @@ const LiveRoom = () => {
 
     const getVideo = async () => {
         try {
-            // const res = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-            const res = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    aspectRatio: 16 / 9,
-                },
-            });
+            const res = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            // const res = await navigator.mediaDevices.getUserMedia({
+            //     video: {
+            //         aspectRatio: 16 / 9,
+            //     },
+            // });
 
             if (res) {
                 setVideoStream(res);
@@ -228,17 +229,22 @@ const LiveRoom = () => {
         }, 1000);
     }, [videoStream, audioStream]);
     return (
-        <div className='mx-1 flex flex-col items-center md:flex-row'>
-            <div className='flex-grow h-full w-full'>
-                <div className='w-full h-full flex justify-center'>
+        <div className='mx-1 flex flex-col items-center md:flex-row h-[80%] '>
+            <div className='flex-grow h-full bg-red-500 flex flex-col'>
+                <div className='flex flex-grow justify-center bg-slate-600 rounded-lg'>
                     <video
+                        width={1280}
+                        height={720}
                         ref={videoRef}
-                        autoFocus={false}
-                        controls={false}
+                        // autoFocus={false}
+                        // controls={false}
                         muted
                         autoPlay
-                        playsInline
-                        className='bg-slate-600 object-contain flex-grow'></video>
+                        // playsInline
+
+                        className='object-contain aspect-video'>
+                        <source />
+                    </video>
                 </div>
 
                 <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
