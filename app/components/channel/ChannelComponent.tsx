@@ -83,7 +83,6 @@ const LiveRoom = () => {
     };
 
     const asignMedia = (mediaSteam: MediaStream) => {
-        console.log(mediaSteam);
         videoRef.current!.srcObject = mediaSteam;
     };
 
@@ -99,11 +98,6 @@ const LiveRoom = () => {
     const getVideo = async () => {
         try {
             const res = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-            // const res = await navigator.mediaDevices.getUserMedia({
-            //     video: {
-            //         aspectRatio: 16 / 9,
-            //     },
-            // });
 
             if (res) {
                 setVideoStream(res);
@@ -127,46 +121,42 @@ const LiveRoom = () => {
             console.error(e);
         }
     };
-    const unPublishAudio = async () => {
-        if (connectionState !== 'connected') return;
-        try {
-            await localParticipant.localParticipant.unpublishTrack(audioStream!.getAudioTracks()[0]);
-            setAudioStream(null);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    const unPublishVideo = async () => {
-        if (connectionState !== 'connected') return;
-        try {
-            await localParticipant.localParticipant.unpublishTrack(videoStream!.getVideoTracks()[0]);
-            setVideoStream(null);
-        } catch (e) {
-            console.error(e);
-        }
-    };
 
     const toggleWebcam = async () => {
-        if (videoStream) {
-            unPublishVideo();
+        if (connectionState !== 'connected') {
+            console.log(videoStream);
+            if (videoStream) {
+                setVideoStream(null);
+            } else {
+                getVideo();
+            }
+
+            return;
+        }
+        if (localParticipant.localParticipant.isCameraEnabled) {
+            localParticipant.localParticipant.setCameraEnabled(false);
             setVideoStream(null);
-        } else if (!videoStream) {
-            getVideo().then((res: MediaStream | undefined) => {
-                if (!res) return;
-                publishVideo(res);
-            });
+        } else {
+            localParticipant.localParticipant.setCameraEnabled(true);
+            getVideo();
         }
     };
 
     const toggleMic = async () => {
-        if (audioStream) {
-            unPublishAudio();
+        if (connectionState !== 'connected') {
+            if (audioStream) {
+                setAudioStream(null);
+            } else {
+                getAudio();
+            }
+            return;
+        }
+        if (localParticipant.localParticipant.isMicrophoneEnabled) {
+            localParticipant.localParticipant.setMicrophoneEnabled(false);
             setAudioStream(null);
-        } else if (!audioStream) {
-            getAudio().then((res: MediaStream | undefined) => {
-                if (!res) return;
-                publishAudio(res);
-            });
+        } else {
+            localParticipant.localParticipant.setMicrophoneEnabled(true);
+            getAudio();
         }
     };
 
@@ -215,19 +205,6 @@ const LiveRoom = () => {
         asignMedia(videoStream!);
     }, [videoStream]);
 
-    // Disables the buttons for 1 second after toggling to discourage spamming
-    const [disabledMic, setDisabledMic] = useState(false);
-    const [disabledCam, setDisabledCam] = useState(false);
-
-    useEffect(() => {
-        setDisabledMic(true);
-        setDisabledCam(true);
-
-        setTimeout(() => {
-            setDisabledMic(false);
-            setDisabledCam(false);
-        }, 1000);
-    }, [videoStream, audioStream]);
     return (
         <div className='mx-1 flex flex-col items-center md:flex-row h-[80%] '>
             <div className='flex-grow h-full bg-red-500 flex flex-col'>
@@ -247,12 +224,12 @@ const LiveRoom = () => {
                 </div>
 
                 <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
-                    <Button onClick={toggleWebcam} disabled={disabledCam}>
+                    <Button onClick={toggleWebcam}>
                         {!videoStream && <img src='/assets/ifluencer_cam_icons/camerared.png' alt='camera logo' className='w-8' />}
                         {videoStream && <img src='/assets/ifluencer_cam_icons/camerawhite.png' alt='camera logo' className='w-8' />}
                     </Button>
 
-                    <Button onClick={toggleMic} disabled={disabledMic}>
+                    <Button onClick={toggleMic}>
                         {!audioStream && <img src='/assets/ifluencer_cam_icons/micred.png' alt='camera logo' className='w-8' />}
                         {audioStream && <img src='/assets/ifluencer_cam_icons/micwhite.png' alt='camera logo' className='w-8' />}
                     </Button>
