@@ -47,7 +47,7 @@ const ChannelComponent: React.FC = () => {
             connect={connected}
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
             // style={{ height: '100vh' }}
-            style={{ width: '100vw' }}>
+            style={{ width: '100vw', height: '100vh' }}>
             <LiveRoom />
         </LiveKitRoom>
     );
@@ -228,40 +228,38 @@ const LiveRoom = () => {
         }, 1000);
     }, [videoStream, audioStream]);
     return (
-        <div>
-            <div className='mx-1 flex flex-col items-center md:flex-row'>
-                <div className='flex-grow h-full w-full'>
-                    <div>
-                        <video
-                            ref={videoRef}
-                            autoFocus={false}
-                            controls={false}
-                            muted
-                            autoPlay
-                            playsInline
-                            className='bg-slate-600 w-full h-full object-cover'></video>
-                    </div>
-
-                    <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
-                        <Button onClick={toggleWebcam} disabled={disabledCam}>
-                            {!videoStream && <img src='/assets/ifluencer_cam_icons/camerared.png' alt='camera logo' className='w-8' />}
-                            {videoStream && <img src='/assets/ifluencer_cam_icons/camerawhite.png' alt='camera logo' className='w-8' />}
-                        </Button>
-
-                        <Button onClick={toggleMic} disabled={disabledMic}>
-                            {!audioStream && <img src='/assets/ifluencer_cam_icons/micred.png' alt='camera logo' className='w-8' />}
-                            {audioStream && <img src='/assets/ifluencer_cam_icons/micwhite.png' alt='camera logo' className='w-8' />}
-                        </Button>
-
-                        <Button onClick={connectToLiveKit} disabled={disabled} variant={connected ? 'destructive' : 'secondary'}>
-                            {!connected && <p>Go Live</p>}
-                            {connected && <p>End Live</p>}
-                        </Button>
-                    </div>
+        <div className='mx-1 flex flex-col items-center md:flex-row'>
+            <div className='flex-grow h-full w-full'>
+                <div className='w-full h-full flex justify-center'>
+                    <video
+                        ref={videoRef}
+                        autoFocus={false}
+                        controls={false}
+                        muted
+                        autoPlay
+                        playsInline
+                        className='bg-slate-600 object-contain flex-grow'></video>
                 </div>
 
-                <ChannelChatbox />
+                <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
+                    <Button onClick={toggleWebcam} disabled={disabledCam}>
+                        {!videoStream && <img src='/assets/ifluencer_cam_icons/camerared.png' alt='camera logo' className='w-8' />}
+                        {videoStream && <img src='/assets/ifluencer_cam_icons/camerawhite.png' alt='camera logo' className='w-8' />}
+                    </Button>
+
+                    <Button onClick={toggleMic} disabled={disabledMic}>
+                        {!audioStream && <img src='/assets/ifluencer_cam_icons/micred.png' alt='camera logo' className='w-8' />}
+                        {audioStream && <img src='/assets/ifluencer_cam_icons/micwhite.png' alt='camera logo' className='w-8' />}
+                    </Button>
+
+                    <Button onClick={connectToLiveKit} disabled={disabled} variant={connected ? 'destructive' : 'secondary'}>
+                        {!connected && <p>Go Live</p>}
+                        {connected && <p>End Live</p>}
+                    </Button>
+                </div>
             </div>
+
+            <ChannelChatbox />
         </div>
     );
 };
