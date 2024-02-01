@@ -236,12 +236,11 @@ const LiveRoom = () => {
                         width={1280}
                         height={720}
                         ref={videoRef}
-                        // autoFocus={false}
-                        // controls={false}
+                        autoFocus={false}
+                        controls={false}
                         muted
                         autoPlay
-                        // playsInline
-
+                        playsInline
                         className='object-contain aspect-video'>
                         <source />
                     </video>
