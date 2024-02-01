@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     }, []);
 
     return (
-        <main className='flex flex-col min-h-screen items-center'>
+        <main className='flex flex-col items-center'>
             {loading && (
                 <div className='h-screen w-full flex justify-center items-center'>
                     {<Loader2 className='mr-2 h-4 w-4 animate-spin' />}

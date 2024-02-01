@@ -46,7 +46,8 @@ const ChannelComponent: React.FC = () => {
             token={token}
             connect={connected}
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
-            style={{ height: '100vh' }}>
+            // style={{ height: '100vh' }}
+            style={{ width: '100vw' }}>
             <LiveRoom />
         </LiveKitRoom>
     );
@@ -96,7 +97,13 @@ const LiveRoom = () => {
 
     const getVideo = async () => {
         try {
-            const res = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            // const res = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            const res = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    aspectRatio: 16 / 9,
+                },
+            });
+
             if (res) {
                 setVideoStream(res);
                 return res;
@@ -110,7 +117,7 @@ const LiveRoom = () => {
 
     const getAudio = async () => {
         try {
-            const res = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+            const res = await navigator.mediaDevices.getUserMedia({ audio: true });
             if (res) {
                 setAudioStream(res);
                 return res;
@@ -223,8 +230,17 @@ const LiveRoom = () => {
     return (
         <div>
             <div className='mx-1 flex flex-col items-center md:flex-row'>
-                <div className='flex-grow'>
-                    <video ref={videoRef} autoFocus={false} controls={false} muted autoPlay playsInline className='bg-slate-600 w-full'></video>
+                <div className='flex-grow h-full w-full'>
+                    <div>
+                        <video
+                            ref={videoRef}
+                            autoFocus={false}
+                            controls={false}
+                            muted
+                            autoPlay
+                            playsInline
+                            className='bg-slate-600 w-full h-full object-cover'></video>
+                    </div>
 
                     <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
                         <Button onClick={toggleWebcam} disabled={disabledCam}>
