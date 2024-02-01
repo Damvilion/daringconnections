@@ -7,9 +7,17 @@ const LiveKitGeneralRoom = () => {
     // const audioStream = useTracks([Track.Source.Microphone]);
     return (
         <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto'>
-            {!videoStream[0] && <video className='bg-slate-700 h-[300px] md:h-[500px] lg:h-[600px] rounded-sm'></video>}
+            {!videoStream[0] && (
+                <div className='h-[300px] w-auto md:h-[500px] lg:h-[600px] rounded-sm object-cover bg-slate-700'>
+                    <video className='w-full h-full rounded-sm object-cover'></video>
+                </div>
+            )}
 
-            {videoStream[0] && <VideoTrack trackRef={videoStream[0]} className='h-[300px] md:h-[500px] lg:h-[600px] rounded-sm'></VideoTrack>}
+            {videoStream[0] && (
+                <div className='h-[300px] w-auto md:h-[500px] lg:h-[600px] rounded-sm object-cover bg-slate-700'>
+                    <VideoTrack trackRef={videoStream[0]} className='w-full h-full rounded-sm object-cover'></VideoTrack>
+                </div>
+            )}
         </div>
     );
 };
