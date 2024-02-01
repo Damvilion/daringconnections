@@ -56,7 +56,7 @@ const LiveKitGeneral = () => {
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
             // Use the default LiveKit theme for nice styles.
             // data-lk-theme='default'
-            style={{ flexGrow: 1 }}>
+            style={{ flexGrow: 1, width: '100vw' }}>
             <LiveKitGeneralRoom />
             <div className='flex justify-evenly w-full mt-1'>
                 <Button className='ml-1 rounded-full bg-purple-500'>Prev</Button>

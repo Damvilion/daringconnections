@@ -8,14 +8,14 @@ const LiveKitGeneralRoom = () => {
     return (
         <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto bg-black'>
             {!videoStream[0] && (
-                <div className=''>
+                <div className='flex justify-center'>
                     <video height={720} width={1280} className='object-contain aspect-video'></video>
                 </div>
             )}
 
             {videoStream[0] && (
-                <div className='h-[300px] w-auto md:h-[500px] lg:h-[600px] rounded-sm object-cover bg-slate-700'>
-                    <VideoTrack trackRef={videoStream[0]} className='w-full h-full rounded-sm object-cover'></VideoTrack>
+                <div className='flex justify-center'>
+                    <VideoTrack height={720} width={1280} trackRef={videoStream[0]} className='object-contain aspect-video'></VideoTrack>
                 </div>
             )}
         </div>
@@ -23,3 +23,9 @@ const LiveKitGeneralRoom = () => {
 };
 
 export default LiveKitGeneralRoom;
+
+{
+    /* <div className='h-[300px] w-auto md:h-[500px] lg:h-[600px] rounded-sm object-cover bg-slate-700'>
+<VideoTrack trackRef={videoStream[0]} className='w-full h-full rounded-sm object-cover'></VideoTrack>
+</div> */
+}
