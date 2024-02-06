@@ -1,7 +1,6 @@
 'use client';
 import LiveKitGeneral from '@/app/components/LiveKit/LiveKitGeneral/LiveKitGeneral';
 import MainCard from '@/app/components/auth/customerCard/MainCard';
-import Chatbox from '@/app/components/chatroom/Chatbox';
 import { useEffect } from 'react';
 import { current_profile } from '@/app/lib/current-profile';
 import { Profile } from '@/app/lib/types/types';
