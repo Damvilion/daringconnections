@@ -1,14 +1,14 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Button } from '../shadCn/ui/button';
-import { LiveKitRoom, useConnectionState, useLocalParticipant } from '@livekit/components-react';
-import { LocalAudioTrack, LocalVideoTrack, Track } from 'livekit-client';
+import { LiveKitRoom, useConnectionState, useLocalParticipant, useParticipants } from '@livekit/components-react';
+import { LocalAudioTrack, LocalVideoTrack, RemoteParticipant, Track } from 'livekit-client';
 import { current_user, jotai, liveKitConnection, microphoneConnection } from '@/app/jotai_store/store';
 import { current_profile } from '@/app/lib/current-profile';
 import { useRouter } from 'next/navigation';
 import { Profile } from '@/app/lib/types/types';
 import ChannelChatbox from './ChannelChatbox';
 import axios from 'axios';
+import ChannelLiveOptions from './channelFooter/ChannelLiveOptions';
 
 const ChannelComponent: React.FC = () => {
     const router = useRouter();
@@ -205,6 +205,7 @@ const LiveRoom = () => {
         asignMedia(videoStream!);
     }, [videoStream]);
 
+    const participants = useParticipants();
     return (
         <div className='mx-1 flex flex-col items-center md:flex-row h-[80%] '>
             <div className='flex-grow h-full bg-red-500 flex flex-col'>
@@ -224,7 +225,7 @@ const LiveRoom = () => {
                 </div>
 
                 <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
-                    <Button onClick={toggleWebcam}>
+                    {/* <Button onClick={toggleWebcam}>
                         {!videoStream && <img src='/assets/ifluencer_cam_icons/camerared.png' alt='camera logo' className='w-8' />}
                         {videoStream && <img src='/assets/ifluencer_cam_icons/camerawhite.png' alt='camera logo' className='w-8' />}
                     </Button>
@@ -237,11 +238,20 @@ const LiveRoom = () => {
                     <Button onClick={connectToLiveKit} disabled={disabled} variant={connected ? 'destructive' : 'secondary'}>
                         {!connected && <p>Go Live</p>}
                         {connected && <p>End Live</p>}
-                    </Button>
+                    </Button> */}
+                    <ChannelLiveOptions
+                        audioStream={audioStream}
+                        connectToLiveKit={connectToLiveKit}
+                        connectionState={connectionState}
+                        toggleMic={toggleMic}
+                        toggleWebcam={toggleWebcam}
+                        videoStream={videoStream}
+                        disabled={disabled}
+                    />
                 </div>
             </div>
 
-            <ChannelChatbox />
+            <ChannelChatbox participants={participants as RemoteParticipant[]} />
         </div>
     );
 };

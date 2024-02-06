@@ -1,11 +1,13 @@
 'use client';
 // import '@livekit/components-styles';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
 import LiveKitGeneralRoom from './LiveKitGeneralRoom';
 import { Button } from '@/app/components/shadCn/ui/button';
 import axios, { AxiosResponse } from 'axios';
-import { pusherClient } from '@/app/lib/pusher';
+// import { pusherClient } from '@/app/lib/pusher';
+
+import { v4 as uuidv4 } from 'uuid';
 
 const LiveKitGeneral = () => {
     interface AxiosDataSet extends AxiosResponse {
@@ -14,7 +16,7 @@ const LiveKitGeneral = () => {
         };
     }
 
-    const username = pusherClient.connection.socket_id;
+    const username = useMemo(() => uuidv4(), []);
 
     const [token, setToken] = useState('');
 
@@ -58,6 +60,7 @@ const LiveKitGeneral = () => {
             // data-lk-theme='default'
             style={{ flexGrow: 1, width: '100vw' }}>
             <LiveKitGeneralRoom />
+
             <div className='flex justify-evenly w-full mt-1'>
                 <Button className='ml-1 rounded-full bg-purple-500'>Prev</Button>
                 <Button className='ml-1 rounded-full bg-purple-500'>Next</Button>
