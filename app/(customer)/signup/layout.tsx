@@ -10,7 +10,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <main>
             <Header />
-            <main className='flex h-screen justify-center mt-3'>{children}</main>
+            <main className='flex justify-center mt-3'>{children}</main>
         </main>
     );
 };
