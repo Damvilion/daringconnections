@@ -3,11 +3,17 @@ import { ScrollArea } from '../shadCn/ui/scroll-area';
 import { Separator } from '../shadCn/ui/separator';
 import { Input } from '../shadCn/ui/input';
 import { Button } from '../shadCn/ui/button';
+import { LocalParticipant, RemoteParticipant } from 'livekit-client';
 
-const ChannelChatbox = () => {
+interface ChannelChatboxProps {
+    participants: LocalParticipant[] | RemoteParticipant[]; // Corrected spelling of 'participants'
+}
+
+const ChannelChatbox = ({ participants }: ChannelChatboxProps) => {
     const tags = Array.from({ length: 5 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);
     return (
         <div className='mr-auto ml-auto lg:mr-2 w-[80%] lg:w-auto my-2 px-10'>
+            {participants.length}
             <ScrollArea className=' h-[50vh] rounded-md border my-2'>
                 <div className='px-10 py-4'>
                     <h1 className='mb-4 font-bold leading-none text-lg text-center'>Welcome to my live chat room</h1>
