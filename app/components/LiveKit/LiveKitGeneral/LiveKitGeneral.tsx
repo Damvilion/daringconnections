@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
 import LiveKitGeneralRoom from './LiveKitGeneralRoom';
-import { Button } from '@/app/components/shadCn/ui/button';
 import axios, { AxiosResponse } from 'axios';
 // import { pusherClient } from '@/app/lib/pusher';
 
@@ -63,11 +62,6 @@ const LiveKitGeneral = () => {
                 // style={{ flexGrow: 1, width: '' }}
             >
                 <LiveKitGeneralRoom />
-
-                <div className='flex justify-evenly w-full mt-1'>
-                    <Button className='ml-1 rounded-full bg-purple-500'>Prev</Button>
-                    <Button className='ml-1 rounded-full bg-purple-500'>Next</Button>
-                </div>
             </LiveKitRoom>
             <Chatbox />
         </div>

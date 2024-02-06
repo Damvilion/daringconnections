@@ -2,6 +2,7 @@ import { VideoTrack, useConnectionState, useParticipants, useTracks } from '@liv
 import { Track } from 'livekit-client';
 import { Loader2 } from 'lucide-react';
 import React from 'react';
+import LivceKitGeneralButtonNavigation from './LivceKitGeneralButtonNavigation';
 
 const LiveKitGeneralRoom = () => {
     const videoStream = useTracks([Track.Source.Camera]);
@@ -24,19 +25,24 @@ const LiveKitGeneralRoom = () => {
                     {connectionState === 'connecting' && (
                         <Loader2 className='text-white w-42 h-42 m-auto absolute left-0 right-0 top-0 bottom-0 animate-spin'>Hello</Loader2>
                     )}
+                    <LivceKitGeneralButtonNavigation />
                 </div>
             )}
 
             {videoStream[0] && (
-                <div className='flex justify-center'>
+                <div className='flex justify-center relative'>
                     <VideoTrack
                         height={1080}
                         width={1920}
                         trackRef={videoStream[0]}
                         className='max-w-full max-h-full object-contain aspect-video'></VideoTrack>
+                    <LivceKitGeneralButtonNavigation />
                 </div>
             )}
-            <div className='text-black bg-white text-xs text-right border-none'>Current Viewers: {participants.length}</div>
+
+            {participants.length > 1 && (
+                <div className='text-black bg-white text-xs text-right border-none'>Current Viewers: {participants.length - 1}</div>
+            )}
         </div>
     );
 };
