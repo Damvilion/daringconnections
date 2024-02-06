@@ -38,7 +38,6 @@ export default function Home() {
             <div className='flex flex-col gap-1 lg:flex-row items-center justify-between'>
                 <MainCard />
                 <LiveKitGeneral />
-                <Chatbox />
             </div>
         </main>
     );

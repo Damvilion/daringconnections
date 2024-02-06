@@ -10,14 +10,20 @@ const LiveKitGeneralRoom = () => {
 
     // const audioStream = useTracks([Track.Source.Microphone]);
     return (
-        <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto bg-black'>
+        <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto bg-black '>
             {!videoStream[0] && (
                 <div className='flex justify-center relative'>
                     <video height={1080} width={1920} className='object-contain aspect-video'></video>
                     {connectionState === 'connecting' ||
                         ('disconnected' && (
-                            <Loader2 className='text-white w-42 h-42 m-auto absolute left-0 right-0 top-0 bottom-0 animate-spin'>Hello</Loader2>
+                            // <Loader2 className='text-white w-42 h-42 m-auto absolute left-0 right-0 top-0 bottom-0 animate-spin'>Hello</Loader2>
+                            <h1 className='text-white text-base flex justify-center items-center m-auto absolute left-0 right-0 top-0 bottom-0'>
+                                No One is Online
+                            </h1>
                         ))}
+                    {connectionState === 'connecting' && (
+                        <Loader2 className='text-white w-42 h-42 m-auto absolute left-0 right-0 top-0 bottom-0 animate-spin'>Hello</Loader2>
+                    )}
                 </div>
             )}
 
@@ -30,7 +36,7 @@ const LiveKitGeneralRoom = () => {
                         className='max-w-full max-h-full object-contain aspect-video'></VideoTrack>
                 </div>
             )}
-            <div className='text-black bg-white text-xs text-right'>Current Viewers: {participants.length}</div>
+            <div className='text-black bg-white text-xs text-right border-none'>Current Viewers: {participants.length}</div>
         </div>
     );
 };

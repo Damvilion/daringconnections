@@ -8,6 +8,7 @@ import axios, { AxiosResponse } from 'axios';
 // import { pusherClient } from '@/app/lib/pusher';
 
 import { v4 as uuidv4 } from 'uuid';
+import Chatbox from '../../chatroom/Chatbox';
 
 const LiveKitGeneral = () => {
     interface AxiosDataSet extends AxiosResponse {
@@ -50,22 +51,26 @@ const LiveKitGeneral = () => {
     }, [username]);
 
     return (
-        <LiveKitRoom
-            video={false}
-            audio={false}
-            token={token}
-            connect={true}
-            serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
-            // Use the default LiveKit theme for nice styles.
-            // data-lk-theme='default'
-            style={{ flexGrow: 1, width: '100vw' }}>
-            <LiveKitGeneralRoom />
+        <div className='flex w-full flex-col items-center lg:flex-row'>
+            <LiveKitRoom
+                video={false}
+                audio={false}
+                token={token}
+                connect={true}
+                serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
+                // Use the default LiveKit theme for nice styles.
+                // data-lk-theme='default'
+                // style={{ flexGrow: 1, width: '' }}
+            >
+                <LiveKitGeneralRoom />
 
-            <div className='flex justify-evenly w-full mt-1'>
-                <Button className='ml-1 rounded-full bg-purple-500'>Prev</Button>
-                <Button className='ml-1 rounded-full bg-purple-500'>Next</Button>
-            </div>
-        </LiveKitRoom>
+                <div className='flex justify-evenly w-full mt-1'>
+                    <Button className='ml-1 rounded-full bg-purple-500'>Prev</Button>
+                    <Button className='ml-1 rounded-full bg-purple-500'>Next</Button>
+                </div>
+            </LiveKitRoom>
+            <Chatbox />
+        </div>
     );
 };
 
