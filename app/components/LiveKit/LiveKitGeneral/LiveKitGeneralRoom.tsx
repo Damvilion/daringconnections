@@ -31,7 +31,11 @@ const LiveKitGeneralRoom = () => {
 
             {videoStreams[0] && (
                 <div className='flex justify-center relative'>
-                    <VideoTrack height={1080} width={1920} trackRef={videoStreams[0]} className='object-contain aspect-video'></VideoTrack>
+                    <VideoTrack
+                        //  height={1080}
+                        //   width={1920}
+                        trackRef={videoStreams[0]}
+                        className='object-contain aspect-video'></VideoTrack>
                     <LivceKitGeneralButtonNavigation />
                 </div>
             )}
