@@ -11,7 +11,7 @@ const LiveKitGeneralRoom = () => {
 
     // const audioStream = useTracks([Track.Source.Microphone]);
     return (
-        <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto  '>
+        <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto bg-black '>
             {!videoStreams[0] && (
                 <div className='flex justify-center relative'>
                     <video height={1080} width={1920} className='object-contain aspect-video'></video>
