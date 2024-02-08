@@ -2,6 +2,7 @@
 import '@livekit/components-styles';
 import React, { useState, useEffect } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
+import LiveKitCamRoom from './LiveKitCamRoom';
 
 interface LiveKitCamProps {
     room: string;
@@ -28,7 +29,9 @@ const LiveKitCam = ({ room }: LiveKitCamProps) => {
             serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
             // Use the default LiveKit theme for nice styles.
             // data-lk-theme='default'
-            style={{ height: '100dvh' }}></LiveKitRoom>
+            style={{ height: '100dvh' }}>
+            <LiveKitCamRoom room={room} />
+        </LiveKitRoom>
     );
 };
 
