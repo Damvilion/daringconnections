@@ -5,14 +5,14 @@ import React from 'react';
 import LivceKitGeneralButtonNavigation from './LivceKitGeneralButtonNavigation';
 
 const LiveKitGeneralRoom = () => {
-    const videoStream = useTracks([Track.Source.Camera]);
+    const videoStreams = useTracks([Track.Source.Camera]);
     const participants = useParticipants();
     const connectionState = useConnectionState();
 
     // const audioStream = useTracks([Track.Source.Microphone]);
     return (
         <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto bg-black '>
-            {!videoStream[0] && (
+            {!videoStreams[0] && (
                 <div className='flex justify-center relative'>
                     <video height={1080} width={1920} className='object-contain aspect-video'></video>
                     {connectionState === 'connecting' ||
@@ -29,16 +29,13 @@ const LiveKitGeneralRoom = () => {
                 </div>
             )}
 
-            {videoStream[0] && (
+            {videoStreams[0] && (
                 <div className='flex justify-center relative'>
-                    <VideoTrack
-                        height={1080}
-                        width={1920}
-                        trackRef={videoStream[0]}
-                        className='max-w-full max-h-full object-contain aspect-video'></VideoTrack>
+                    <VideoTrack height={1080} width={1920} trackRef={videoStreams[0]} className='object-contain aspect-video'></VideoTrack>
                     <LivceKitGeneralButtonNavigation />
                 </div>
             )}
+            {videoStreams[0] && <div className='bg-white'>LIVE STREAM SHOULD BE IN PROGRESS</div>}
 
             {participants.length > 1 && (
                 <div className='text-black bg-white text-xs text-right border-none'>Current Viewers: {participants.length - 1}</div>
