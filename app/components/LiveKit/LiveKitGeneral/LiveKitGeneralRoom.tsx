@@ -35,7 +35,6 @@ const LiveKitGeneralRoom = () => {
                     <LivceKitGeneralButtonNavigation />
                 </div>
             )}
-            {videoStreams[0] && <div className='bg-white'>LIVE STREAM SHOULD BE IN PROGRESS</div>}
 
             {participants.length > 1 && (
                 <div className='text-black bg-white text-xs text-right border-none'>Current Viewers: {participants.length - 1}</div>
