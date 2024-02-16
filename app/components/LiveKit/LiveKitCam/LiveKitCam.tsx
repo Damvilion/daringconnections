@@ -22,14 +22,7 @@ const LiveKitCam = ({ room }: LiveKitCamProps) => {
         })();
     }, []);
     return (
-        <LiveKitRoom
-            video={false}
-            audio={false}
-            token={token}
-            serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
-            // Use the default LiveKit theme for nice styles.
-            // data-lk-theme='default'
-            style={{ height: '100dvh' }}>
+        <LiveKitRoom video={false} audio={false} token={token} serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL} style={{ height: '100dvh' }}>
             <LiveKitCamRoom room={room} />
         </LiveKitRoom>
     );
