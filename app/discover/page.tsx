@@ -30,8 +30,10 @@ const Page = () => {
             <header>
                 <AuthNav />
             </header>
-
             <SearchNav />
+            <div className='flex flex-col gap-1 lg:flex-row items-center justify-center'>
+                <h1>Discover Page</h1>
+            </div>
         </main>
     );
 };

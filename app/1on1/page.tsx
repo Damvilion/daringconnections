@@ -32,6 +32,9 @@ const Page = () => {
             </header>
 
             <SearchNav />
+            <div className='flex flex-col gap-1 lg:flex-row items-center justify-center'>
+                <h1>1 on 1 Page</h1>
+            </div>
         </main>
     );
 };
