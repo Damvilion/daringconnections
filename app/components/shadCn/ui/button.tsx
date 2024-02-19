@@ -16,6 +16,7 @@ const buttonVariants = cva(
                 ghost: 'hover:bg-accent hover:text-accent-foreground',
                 link: 'text-primary underline-offset-4 hover:underline',
                 googleButton: 'rounded-full border-solid border-2 border-black text-black bg-white mx-auto hover:bg-white',
+                searchNav: 'rounded-full border-solid border-2 border-[#5c249e] text-black bg-white mx-auto hover:bg-white',
             },
             size: {
                 default: 'h-10 px-4 py-2',
