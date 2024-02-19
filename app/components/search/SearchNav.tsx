@@ -7,18 +7,22 @@ import Link from 'next/link';
 const SearchNav = () => {
     const path = usePathname();
     return (
-        <div className='flex justify-center my-2'>
+        <div className='flex justify-center my-2 w-screen'>
             <div className='flex justify-between gap-2'>
                 <Link href='/1on1'>
-                    <Button variant={path === '/1on1' ? 'destructive' : 'default'}>1 on 1</Button>
+                    <Button className='rounded-3xl transition-all' size='sm' variant={path === '/1on1' ? 'destructive' : 'googleButton'}>
+                        1 on 1
+                    </Button>
                 </Link>
                 <Link href='/'>
-                    <Button className='' variant={path === '/' ? 'destructive' : 'default'}>
+                    <Button className='rounded-3xl transition-all' size='sm' variant={path === '/' ? 'destructive' : 'googleButton'}>
                         Live
                     </Button>
                 </Link>
                 <Link href='/discover'>
-                    <Button variant={path === '/discover' ? 'destructive' : 'default'}>Discover</Button>
+                    <Button className='rounded-3xl transition-all' size='sm' variant={path === '/discover' ? 'destructive' : 'googleButton'}>
+                        Discover
+                    </Button>
                 </Link>
             </div>
         </div>

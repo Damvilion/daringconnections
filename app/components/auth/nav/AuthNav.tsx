@@ -9,7 +9,7 @@ import { current_user, jotai } from '@/app/jotai_store/store';
 const AuthNav = () => {
     const [user] = jotai.useAtom(current_user);
     return (
-        <nav className='flex items-center justify-around'>
+        <nav className='flex items-center justify-around w-screen'>
             <div className=''>
                 <Link href='/'>
                     <img src='/assets/logo/dLogoPng.png' alt='DaringConnections' className='w-[80px] sm:w-[90px] md:w-[100px]' />
@@ -29,7 +29,7 @@ const AuthNav = () => {
                 <div className='hidden lg:block'>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
-                            <h1 className='p-2 rounded-md bg-[#ff69b4] text-white'>Create Free Account</h1>
+                            <h1 className='p-2 rounded-md bg-[#e469ff] text-white'>Create Free Account</h1>
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent>
