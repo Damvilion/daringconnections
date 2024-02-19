@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import ChannelAvatar from '@/app/components/channel/ChannelAvatar';
+import CustomerInfoCard from '../../auth/customerCard/CustomerInfoCard';
 
 const ChannelHeader = () => {
     return (
@@ -9,7 +9,7 @@ const ChannelHeader = () => {
                 <Link href='/'>
                     <img src='/assets/logo/dLogoPng.png' alt='DaringConnections' className='w-[80px]' />
                 </Link>
-                <ChannelAvatar />
+                <CustomerInfoCard />
             </nav>
         </header>
     );
