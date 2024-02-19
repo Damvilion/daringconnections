@@ -1,7 +1,6 @@
 'use client';
 import React from 'react';
 import { Card, CardContent } from '@/app/components/shadCn/ui/card';
-// import { Button } from '../../shadCn/ui/button';
 import { Separator } from '@/app/components/shadCn/ui/separator';
 import CustomerInfoCard from './CustomerInfoCard';
 import CustomerCardContent from './CustomerCardContent';
