@@ -17,7 +17,7 @@ const DropDown = () => {
     const handleLogout = async () => {
         await signOut(FirebaseAuth);
         setUser(null);
-        router.refresh();
+        router.push('/');
     };
 
     const handleChannel = () => {
