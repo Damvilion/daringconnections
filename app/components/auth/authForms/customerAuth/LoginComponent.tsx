@@ -39,9 +39,7 @@ const LoginComponent = () => {
             if ((error as FirebaseErrors).message === 'Firebase: Error (auth/invalid-credential).') {
                 setLoginError('Problem finding email or password');
             }
-            console.log((error as FirebaseErrors).message);
         }
-        console.log(data);
         reset();
     };
 
