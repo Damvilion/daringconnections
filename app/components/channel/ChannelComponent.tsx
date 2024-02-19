@@ -82,7 +82,7 @@ const LiveRoom = () => {
         }
     };
 
-    const asignMedia = (mediaSteam: MediaStream) => {
+    const asignMedia = (mediaSteam: MediaStream | null) => {
         videoRef.current!.srcObject = mediaSteam;
     };
 
@@ -202,7 +202,7 @@ const LiveRoom = () => {
     }, []);
 
     useEffect(() => {
-        asignMedia(videoStream!);
+        asignMedia(videoStream);
     }, [videoStream]);
 
     const participants = useParticipants();
