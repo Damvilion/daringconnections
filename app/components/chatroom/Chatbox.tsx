@@ -7,7 +7,7 @@ import { Button } from '../shadCn/ui/button';
 const Chatbox = () => {
     const tags = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);
     return (
-        <div className='mr-auto ml-auto lg:mr-2 w-[80%] lg:w-auto my-2 px-14'>
+        <div className='mr-auto ml-auto lg:mr-2 w-[80%] lg:w-auto my-2 px-5'>
             <ScrollArea className=' h-[40vh] sm:h-[45vh] md:h-[50vh] lg:h-[70vh] rounded-md border my-2'>
                 <div className='px-10 py-4'>
                     <h1 className='mb-4 font-bold leading-none text-xl text-center'>Welcome to my live chat room</h1>
