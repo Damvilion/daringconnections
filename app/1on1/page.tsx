@@ -1,13 +1,12 @@
 'use client';
 import React, { useEffect } from 'react';
-import SearchNav from '../components/search/SearchNav';
-import AuthNav from '../components/auth/nav/AuthNav';
 import { current_profile } from '../lib/current-profile';
 import { Profile } from '../lib/types/types';
 import { jotai, current_user, loadingUser } from '@/app/jotai_store/store';
+import OneonOneDialog from './OneonOneDialog';
 
 const Page = () => {
-    const [, setUser] = jotai.useAtom(current_user);
+    const [user, setUser] = jotai.useAtom(current_user);
 
     const [, setLoading] = jotai.useAtom(loadingUser);
     const getUser = async () => {
@@ -25,17 +24,26 @@ const Page = () => {
     useEffect(() => {
         getUser();
     }, []);
-    return (
-        <main>
-            <header>
-                <AuthNav />
-            </header>
 
-            <SearchNav />
-            <div className='flex flex-col gap-1 lg:flex-row items-center justify-center'>
-                <h1>1 on 1 Page</h1>
+    const renderScreen = () => {
+        return (
+            <div className='w-screen flex flex-col md:flex-row gap-2 p-4'>
+                <div className='bg-black rounded-xl'>
+                    <video height={720} width={1280} className='object-contain aspect-video'></video>
+                </div>
+                <div className='bg-black rounded-xl'>
+                    <video height={720} width={1280} src=''></video>
+                </div>
             </div>
-        </main>
+        );
+    };
+
+    return (
+        <div className='w-screen flex flex-col justify-center items-center'>
+            {!user && <OneonOneDialog />}
+
+            {user && renderScreen()}
+        </div>
     );
 };
 
