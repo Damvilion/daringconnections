@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-    DropdownMenuContent,
-    DropdownMenuItem,
-    // DropdownMenuLabel,
-    // DropdownMenuSeparator,
-} from '@/app/components/shadCn/ui/dropdown-menu';
+import { DropdownMenuContent, DropdownMenuItem } from '@/app/components/shadCn/ui/dropdown-menu';
 import { signOut } from 'firebase/auth';
 import { FirebaseAuth } from '@/firebase/firebase-config';
 import { useRouter } from 'next/navigation';
@@ -36,17 +31,19 @@ const DropDown = () => {
         </DropdownMenuItem>
     );
 
-    const renderCreateAccountMenuItem = () => (
-        <DropdownMenuItem onClick={() => router.push('/signup')} className='text-center mx-auto'>
-            Create free account
-        </DropdownMenuItem>
-    );
-    const renderLoginAccountMenuItem = () => (
-        <DropdownMenuItem onClick={() => router.push('/login')} className='text-center mx-auto'>
-            Login
-        </DropdownMenuItem>
-    );
-
+    const renderCreateItems = () => {
+        return (
+            <div>
+                <DropdownMenuItem onClick={() => router.push('/signup')} className='text-center mx-auto'>
+                    Create free account
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/login')} className='text-center mx-auto'>
+                    Login
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/join')}>Become an influencer</DropdownMenuItem>
+            </div>
+        );
+    };
     return (
         <DropdownMenuContent>
             {user?.isCamUser ? (
@@ -57,10 +54,7 @@ const DropDown = () => {
             ) : user ? (
                 renderSignOutMenuItem()
             ) : (
-                <div>
-                    {renderCreateAccountMenuItem()}
-                    {renderLoginAccountMenuItem()}
-                </div>
+                <div>{renderCreateItems()}</div>
             )}
         </DropdownMenuContent>
     );
