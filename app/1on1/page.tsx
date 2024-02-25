@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { current_profile } from '../lib/current-profile';
 import { Profile } from '../lib/types/types';
 import { jotai, current_user, loadingUser } from '@/app/jotai_store/store';
-import OneonOneDialog from './OneonOneDialog';
+import OneonOneDialog from './components/OneonOneDialog';
 
 const Page = () => {
     const [user, setUser] = jotai.useAtom(current_user);
