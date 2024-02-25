@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../components/shadCn/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../../components/shadCn/ui/dialog';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 const OneonOneDialog = () => {
