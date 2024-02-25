@@ -10,17 +10,17 @@ const SearchNav = () => {
         <div className='flex justify-center my-2 md:my-1 lg:my-0 w-screen'>
             <div className='flex justify-between gap-2'>
                 <Link href='/1on1'>
-                    <Button className='rounded-3xl transition-all' size='sm' variant={path === '/1on1' ? 'destructive' : 'searchNav'}>
+                    <Button className='rounded-3xl transition-all' size='sm' variant={path === '/1on1' ? 'searchNavActive' : 'searchNav'}>
                         1 on 1
                     </Button>
                 </Link>
                 <Link href='/'>
-                    <Button className='rounded-3xl transition-all' size='sm' variant={path === '/' ? 'destructive' : 'searchNav'}>
+                    <Button className='rounded-3xl transition-all' size='sm' variant={path === '/' ? 'searchNavActive' : 'searchNav'}>
                         Live
                     </Button>
                 </Link>
                 <Link href='/discover'>
-                    <Button className='rounded-3xl transition-all' size='sm' variant={path === '/discover' ? 'destructive' : 'searchNav'}>
+                    <Button className='rounded-3xl transition-all' size='sm' variant={path === '/discover' ? 'searchNavActive' : 'searchNav'}>
                         Discover
                     </Button>
                 </Link>
