@@ -1,4 +1,4 @@
-import { VideoTrack, useConnectionState, useParticipants, useTracks } from '@livekit/components-react';
+import { AudioTrack, VideoTrack, useConnectionState, useParticipants, useTracks } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import { Loader2 } from 'lucide-react';
 import React from 'react';
@@ -9,9 +9,11 @@ const LiveKitGeneralRoom = () => {
     const participants = useParticipants();
     const connectionState = useConnectionState();
 
-    // const audioStream = useTracks([Track.Source.Microphone]);
+    const audioStream = useTracks([Track.Source.Microphone]);
+
     return (
-        <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto bg-black '>
+        <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto bg-black rounded-md'>
+            {audioStream[0] && <AudioTrack trackRef={audioStream[0]}></AudioTrack>}
             {!videoStreams[0] && (
                 <div className='flex justify-center relative'>
                     <video height={1080} width={1920} className='object-contain aspect-video'></video>
@@ -23,7 +25,7 @@ const LiveKitGeneralRoom = () => {
                             </h1>
                         ))}
                     {connectionState === 'connecting' && (
-                        <Loader2 className='text-white w-42 h-42 m-auto absolute left-0 right-0 top-0 bottom-0 animate-spin'>Hello</Loader2>
+                        <Loader2 className='text-white w-42 h-42 m-auto absolute left-0 right-0 top-0 bottom-0 animate-spin'></Loader2>
                     )}
                     <LivceKitGeneralButtonNavigation />
                 </div>
