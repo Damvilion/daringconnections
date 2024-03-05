@@ -5,9 +5,11 @@ import CustomerInfoCard from '@/app/components/auth/customerCard/CustomerInfoCar
 import ConnectButton from '../../ConnectButton';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/app/components/shadCn/ui/dropdown-menu';
 import { current_user, jotai } from '@/app/jotai_store/store';
+import { useRouter } from 'next/navigation';
 
 const AuthNav = () => {
     const [user] = jotai.useAtom(current_user);
+    const router = useRouter();
     return (
         <nav className='flex items-center justify-around w-screen'>
             <div className=''>
@@ -33,26 +35,23 @@ const AuthNav = () => {
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent>
-                            <DropdownMenuItem>
-                                <div>
-                                    <Link href='/signup'>
-                                        <p>Create Free Account</p>
-                                    </Link>
-                                </div>
+                            <DropdownMenuItem
+                                onClick={() => {
+                                    router.push('/signup');
+                                }}>
+                                <p>Create Free Account</p>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <div>
-                                    <Link href='/login'>
-                                        <p>Login</p>
-                                    </Link>
-                                </div>
+                            <DropdownMenuItem
+                                onClick={() => {
+                                    router.push('/login');
+                                }}>
+                                <p>Login</p>
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <div>
-                                    <Link href='/join'>
-                                        <p>Become a Creator</p>
-                                    </Link>
-                                </div>
+                            <DropdownMenuItem
+                                onClick={() => {
+                                    router.push('/join');
+                                }}>
+                                <p>Become a Creator</p>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
