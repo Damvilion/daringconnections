@@ -50,7 +50,7 @@ const AuthNav = () => {
                             <DropdownMenuItem>
                                 <div>
                                     <Link href='/join'>
-                                        <p>Become a creator</p>
+                                        <p>Become a Creator</p>
                                     </Link>
                                 </div>
                             </DropdownMenuItem>
