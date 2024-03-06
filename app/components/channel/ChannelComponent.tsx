@@ -124,7 +124,6 @@ const LiveRoom = () => {
 
     const toggleWebcam = async () => {
         if (connectionState !== 'connected') {
-            console.log(videoStream);
             if (videoStream) {
                 setVideoStream(null);
             } else {
@@ -225,20 +224,6 @@ const LiveRoom = () => {
                 </div>
 
                 <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
-                    {/* <Button onClick={toggleWebcam}>
-                        {!videoStream && <img src='/assets/ifluencer_cam_icons/camerared.png' alt='camera logo' className='w-8' />}
-                        {videoStream && <img src='/assets/ifluencer_cam_icons/camerawhite.png' alt='camera logo' className='w-8' />}
-                    </Button>
-
-                    <Button onClick={toggleMic}>
-                        {!audioStream && <img src='/assets/ifluencer_cam_icons/micred.png' alt='camera logo' className='w-8' />}
-                        {audioStream && <img src='/assets/ifluencer_cam_icons/micwhite.png' alt='camera logo' className='w-8' />}
-                    </Button>
-
-                    <Button onClick={connectToLiveKit} disabled={disabled} variant={connected ? 'destructive' : 'secondary'}>
-                        {!connected && <p>Go Live</p>}
-                        {connected && <p>End Live</p>}
-                    </Button> */}
                     <ChannelLiveOptions
                         audioStream={audioStream}
                         connectToLiveKit={connectToLiveKit}
