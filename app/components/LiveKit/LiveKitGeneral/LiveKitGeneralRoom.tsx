@@ -12,7 +12,7 @@ const LiveKitGeneralRoom = () => {
     const audioStream = useTracks([Track.Source.Microphone]);
 
     return (
-        <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto bg-black rounded-md'>
+        <div className='w-[100%] mt-3 mx-1 mr-auto ml-auto bg-black lg:rounded-md'>
             {audioStream[0] && <AudioTrack trackRef={audioStream[0]}></AudioTrack>}
             {!videoStreams[0] && (
                 <div className='flex justify-center relative'>
