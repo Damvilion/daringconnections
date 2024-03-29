@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "migrate:mysql": "dotenv -e .env.local -- npx prisma db push",
+        "migrate:supabase": "dotenv -e .env.local -- npx prisma migrate dev --name init",
         "dev": "next dev",
         "build": "prisma db push && prisma generate && next build",
         "start": "next start",
@@ -42,7 +43,7 @@
         "zod": "^3.22.4"
     },
     "devDependencies": {
-        "@prisma/client": "^5.8.1",
+        "@prisma/client": "^5.11.0",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
@@ -58,7 +59,7 @@
         "postcss": "^8",
         "prettier": "^3.1.1",
         "prettier-plugin-tailwindcss": "^0.5.10",
-        "prisma": "^5.8.1",
+        "prisma": "^5.11.0",
         "tailwindcss": "^3.3.0",
         "typescript": "^5"
     }
