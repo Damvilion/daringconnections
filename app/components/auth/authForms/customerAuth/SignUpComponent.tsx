@@ -36,7 +36,6 @@ const SignUpComponent = () => {
     const onSubmit = async (data: TSignUpSchema) => {
         try {
             const res: AxiosResponseAdd = await axios.post('/api/auth/customerSignUp', data);
-            console.log(res.data);
             if (res.data.message === 'ISSUE') {
                 setErrorType(res.data.type);
                 return;
@@ -44,6 +43,7 @@ const SignUpComponent = () => {
                 setErrorType('FAILED');
                 return;
             } else if (res.data.message === 'SUCCESS') {
+                router.push('/login');
                 setErrorType('');
             }
         } catch (error) {
