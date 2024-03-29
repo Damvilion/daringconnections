@@ -40,7 +40,7 @@ const DropDown = () => {
                 <DropdownMenuItem onClick={() => router.push('/login')} className='text-center mx-auto'>
                     Login
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => router.push('/join')}>Become an influencer</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/join')}>Become a Creator</DropdownMenuItem>
             </div>
         );
     };

@@ -1,66 +1,62 @@
-'use client';
-// import '@livekit/components-styles';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { LiveKitRoom } from '@livekit/components-react';
-import LiveKitGeneralRoom from './LiveKitGeneralRoom';
-import axios, { AxiosResponse } from 'axios';
-// import { pusherClient } from '@/app/lib/pusher';
-
+import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import Chatbox from '../../chatroom/Chatbox';
+import { current_profile } from '@/app/lib/current-profile';
+import { Profile } from '@/app/lib/types/types';
+import LiveKitGeneralRoom from './LiveKitGeneralRoom';
+import { jotai, liveKitConnection, current_user, liveKitRoom, liveKitDataToken } from '@/app/jotai_store/store';
 
 const LiveKitGeneral = () => {
-    interface AxiosDataSet extends AxiosResponse {
-        data: {
-            allUsers: string[];
-        };
-    }
-
-    const username = useMemo(() => uuidv4(), []);
-
-    const [token, setToken] = useState('');
-
-    const connectToLiveKit = async (room: string, username: string | number) => {
+    const [connected, setConnected] = jotai.useAtom(liveKitConnection);
+    const [room, setLiveKitRoom] = jotai.useAtom(liveKitRoom);
+    const [user] = jotai.useAtom(current_user);
+    const [dataToken, setDataToken] = jotai.useAtom(liveKitDataToken);
+    const connectToLiveKit = async (room: string, username: string) => {
         try {
             const resp = await fetch(`/api/live-kit?room=${room}&username=${username}`);
             const data = await resp.json();
-            setToken(data.token);
+            setDataToken(data.token);
         } catch (e) {
             console.error(e);
         }
     };
 
-    const FetchFromRedis = async () => {
-        const res: AxiosDataSet = await axios.post('/api/live-kit/getOnlineInfluencer');
-        if (res.status === 200) {
-            const random = Math.floor(Math.random() * res.data.allUsers.length);
-            const room = res.data.allUsers[random];
-
-            return room;
-        }
+    const fetchRandomRoom = async () => {
+        const response = await axios.post('/api/live-kit/getOnlineInfluencer');
+        const allUsers = response.data.allUsers;
+        const randomIndex = Math.floor(Math.random() * allUsers.length);
+        const room = allUsers[randomIndex];
+        setLiveKitRoom(room);
+        return room;
     };
-    useEffect(() => {
-        if (!username) return;
 
-        FetchFromRedis().then((room) => {
-            if (room) {
+    useEffect(() => {
+        const initializeLiveKit = async () => {
+            const user = (await current_profile()) as Profile;
+            console.log('user', user);
+            const room = await fetchRandomRoom();
+
+            if (room && user) {
+                connectToLiveKit(room, user.username);
+            } else if (room && !user) {
+                const username = uuidv4();
                 connectToLiveKit(room, username);
             }
-        });
-    }, [username]);
+        };
+
+        initializeLiveKit();
+    }, []);
+
+    useEffect(() => {
+        setConnected(false);
+        connectToLiveKit(room, uuidv4()).then(() => setConnected(true));
+    }, [user]);
 
     return (
         <div className='flex w-full flex-col items-center lg:flex-row'>
-            <LiveKitRoom
-                video={false}
-                audio={false}
-                token={token}
-                connect={true}
-                serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
-                // Use the default LiveKit theme for nice styles.
-                // data-lk-theme='default'
-                // style={{ flexGrow: 1, width: '' }}
-            >
+            <LiveKitRoom video={false} audio={false} token={dataToken} connect={connected} serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}>
                 <LiveKitGeneralRoom />
             </LiveKitRoom>
             <Chatbox />

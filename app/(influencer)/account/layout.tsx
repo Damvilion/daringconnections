@@ -1,4 +1,5 @@
 'use client';
+import { jotai, loadingUser, liveKitConnection } from '@/app/jotai_store/store';
 import { current_profile } from '@/app/lib/current-profile';
 import { Profile } from '@/app/lib/types/types';
 import { Loader2 } from 'lucide-react';
@@ -12,8 +13,11 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const [, setUserLoading] = jotai.useAtom(loadingUser);
+    const [, setLiveKitConnection] = jotai.useAtom(liveKitConnection);
 
     useEffect(() => {
+        setLiveKitConnection(false);
         const getProfile = async () => {
             const profile: Profile = (await current_profile()) as Profile;
             if (!profile) {
@@ -22,6 +26,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 router.push('/');
             } else {
                 setLoading(false);
+                setUserLoading(false);
             }
         };
 

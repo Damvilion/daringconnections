@@ -10,6 +10,7 @@ import { jotai, loadingUser, current_user } from '@/app/jotai_store/store';
 const CustomerInfoCard = () => {
     const [loading] = jotai.useAtom(loadingUser);
     const [user] = jotai.useAtom(current_user);
+    console.log(loading);
 
     return (
         <CardHeader className=''>
