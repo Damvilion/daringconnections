@@ -10,14 +10,13 @@ import { jotai, loadingUser, current_user } from '@/app/jotai_store/store';
 const CustomerInfoCard = () => {
     const [loading] = jotai.useAtom(loadingUser);
     const [user] = jotai.useAtom(current_user);
-    console.log(loading);
 
     return (
         <CardHeader className=''>
             {loading ? (
                 <CardSkeleton />
             ) : (
-                <div className='flex items-center px-1 md:px-5 gap-1'>
+                <div className='flex items-center px-1 gap-1'>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Avatar>

@@ -35,7 +35,6 @@ const LiveKitGeneral = () => {
     useEffect(() => {
         const initializeLiveKit = async () => {
             const user = (await current_profile()) as Profile;
-            console.log('user', user);
             const room = await fetchRandomRoom();
 
             if (room && user) {
