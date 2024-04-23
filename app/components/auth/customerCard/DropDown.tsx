@@ -2,8 +2,9 @@ import React from 'react';
 import { DropdownMenuContent, DropdownMenuItem } from '@/app/components/shadCn/ui/dropdown-menu';
 import { signOut } from 'firebase/auth';
 import { FirebaseAuth } from '@/firebase/firebase-config';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { jotai, current_user } from '@/app/jotai_store/store';
+import { Separator } from '../../shadCn/ui/separator';
 
 const DropDown = () => {
     const router = useRouter();
@@ -44,12 +45,27 @@ const DropDown = () => {
             </div>
         );
     };
+
+    const path = usePathname();
+    const menuItemOptions = () => {
+        return (
+            <div>
+                {path === '/' ? null : <DropdownMenuItem onClick={() => router.push('/')}>Home</DropdownMenuItem>}
+                {path === '/my/notifications' ? null : (
+                    <DropdownMenuItem onClick={() => router.push('/my/notifications')}>Notifications</DropdownMenuItem>
+                )}
+                {path === '/my/messages' ? null : <DropdownMenuItem onClick={() => router.push('/my/messages')}>Messages</DropdownMenuItem>}
+            </div>
+        );
+    };
     return (
         <DropdownMenuContent>
             {user?.isCamUser ? (
                 <div>
-                    {renderSignOutMenuItem()}
+                    {menuItemOptions()}
+                    <Separator />
                     {renderChannelMenuItem()}
+                    {renderSignOutMenuItem()}
                 </div>
             ) : user ? (
                 renderSignOutMenuItem()
