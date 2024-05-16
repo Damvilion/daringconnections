@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 
 const AuthNav = () => {
     const [user] = jotai.useAtom(current_user);
+
     const router = useRouter();
     return (
         <nav className='flex items-center justify-around w-screen'>
