@@ -30,7 +30,6 @@ const InfluencerFormComponent = () => {
     const router = useRouter();
 
     const onSubmit = async (data: ISignUpSchema) => {
-        console.log(data);
         try {
             const res: AxiosResponseAdd = await axios.post('/api/auth/influencerSignUp', data);
             console.log(res.data);
