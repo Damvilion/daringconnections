@@ -47,6 +47,7 @@ const LoginComponent = () => {
         setLoading(true);
         signInWithPopup(FirebaseAuth, FirebaseGoogleAuthProvider)
             .then((result) => {
+                // console.log(result);
                 if (result.user) {
                     setLoading(false);
 
