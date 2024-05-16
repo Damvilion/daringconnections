@@ -16,7 +16,7 @@ const LiveKitGeneralRoom = () => {
             {audioStream[0] && <AudioTrack trackRef={audioStream[0]}></AudioTrack>}
             {!videoStreams[0] && (
                 <div className='flex justify-center relative'>
-                    <video height={1080} width={1920} className='object-contain aspect-video'></video>
+                    <video height={1080} width={1920} className='object-contain aspect-video lg:min-w-[720px]'></video>
                     {connectionState === 'connecting' ||
                         ('disconnected' && (
                             // <Loader2 className='text-white w-42 h-42 m-auto absolute left-0 right-0 top-0 bottom-0 animate-spin'>Hello</Loader2>

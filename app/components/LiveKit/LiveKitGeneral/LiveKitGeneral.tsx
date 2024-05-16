@@ -54,7 +54,7 @@ const LiveKitGeneral = () => {
     }, [user]);
 
     return (
-        <div className='flex w-full flex-col items-center lg:flex-row'>
+        <div className='flex w-full flex-col items-center xl:flex-row lg:flex-row'>
             <LiveKitRoom video={false} audio={false} token={dataToken} connect={connected} serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}>
                 <LiveKitGeneralRoom />
             </LiveKitRoom>

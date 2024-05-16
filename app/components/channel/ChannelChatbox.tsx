@@ -4,16 +4,20 @@ import { Separator } from '../shadCn/ui/separator';
 import { Input } from '../shadCn/ui/input';
 import { Button } from '../shadCn/ui/button';
 import { LocalParticipant, RemoteParticipant } from 'livekit-client';
+import Image from 'next/image';
 
 interface ChannelChatboxProps {
-    participants: LocalParticipant[] | RemoteParticipant[]; // Corrected spelling of 'participants'
+    participants: LocalParticipant[] | RemoteParticipant[];
 }
 
 const ChannelChatbox = ({ participants }: ChannelChatboxProps) => {
     const tags = Array.from({ length: 5 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);
     return (
         <div className='mr-auto ml-auto lg:mr-2 w-[80%] lg:w-auto my-2 px-10'>
-            {participants.length}
+            <div className='w-full flex flex-row justify-between items-center'>
+                <Image width={30} height={100} src='/icon_default.jpg' alt=''></Image>
+                <p className='text-xs'>{participants.length - 1}</p>
+            </div>
             <ScrollArea className=' h-[50vh] rounded-md border my-2'>
                 <div className='px-10 py-4'>
                     <h1 className='mb-4 font-bold leading-none text-lg text-center'>Welcome to my live chat room</h1>

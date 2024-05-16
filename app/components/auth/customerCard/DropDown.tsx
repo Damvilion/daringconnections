@@ -68,7 +68,11 @@ const DropDown = () => {
                     {renderSignOutMenuItem()}
                 </div>
             ) : user ? (
-                renderSignOutMenuItem()
+                <div>
+                    {menuItemOptions()}
+                    <Separator />
+                    {renderSignOutMenuItem()}
+                </div>
             ) : (
                 <div>{renderCreateItems()}</div>
             )}

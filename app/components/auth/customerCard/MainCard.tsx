@@ -13,7 +13,7 @@ const MainCard = () => {
     const [user] = jotai.useAtom(current_user);
 
     return (
-        <Card className='mr-auto ml-auto lg:ml-2 lg:block hidden'>
+        <Card className='mr-auto ml-auto lg:ml-2 2xl:block hidden'>
             <CustomerInfoCard />
             <Separator className='my-2 w-[75%] mx-auto' />
             <CardContent>

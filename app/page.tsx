@@ -8,6 +8,7 @@ import { Profile } from '@/app/lib/types/types';
 import { jotai, current_user, loadingUser } from '@/app/jotai_store/store';
 import AuthNav from './components/auth/nav/AuthNav';
 import SearchNav from './components/search/SearchNav';
+import About from './components/infopages/cutomerInfo/About';
 
 export default function Home() {
     const [, setUser] = jotai.useAtom(current_user);
@@ -36,10 +37,11 @@ export default function Home() {
                 <AuthNav />
             </header>
             <SearchNav />
-            <div className='flex flex-col gap-1 lg:flex-row items-center justify-between'>
+            <div className='flex flex-col gap-1 xl:flex-row items-center justify-between w-[100vw]'>
                 <MainCard />
                 <LiveKitGeneral />
             </div>
+            <About />
         </main>
     );
 }

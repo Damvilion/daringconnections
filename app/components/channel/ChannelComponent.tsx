@@ -9,6 +9,7 @@ import { Profile } from '@/app/lib/types/types';
 import ChannelChatbox from './ChannelChatbox';
 import axios from 'axios';
 import ChannelLiveOptions from './channelFooter/ChannelLiveOptions';
+import ChannelDiscriptionComponent from './channelDescription/ChannelDiscriptionComponent';
 
 const ChannelComponent: React.FC = () => {
     const router = useRouter();
@@ -206,37 +207,40 @@ const LiveRoom = () => {
 
     const participants = useParticipants();
     return (
-        <div className='mx-1 flex flex-col items-center md:flex-row h-[80%] '>
-            <div className='flex-grow h-full bg-red-500 flex flex-col'>
-                <div className='flex flex-grow justify-center bg-slate-600 rounded-lg'>
-                    <video
-                        width={1280}
-                        height={720}
-                        ref={videoRef}
-                        autoFocus={false}
-                        controls={false}
-                        muted
-                        autoPlay
-                        playsInline
-                        className='object-contain aspect-video'>
-                        <source />
-                    </video>
+        <div className='flex flex-col items-center'>
+            <div className='mx-1 flex flex-col items-center md:flex-row h-[80%] '>
+                <div className='flex-grow h-full bg-black flex flex-col'>
+                    <div className='flex flex-grow justify-center bg-black rounded-lg'>
+                        <video
+                            width={1280}
+                            height={720}
+                            ref={videoRef}
+                            autoFocus={false}
+                            controls={false}
+                            muted
+                            autoPlay
+                            playsInline
+                            className='object-contain aspect-video'>
+                            <source />
+                        </video>
+                    </div>
+
+                    <div className='flex justify-center gap-2 items-center p-1 bg-[#18181b]'>
+                        <ChannelLiveOptions
+                            audioStream={audioStream}
+                            connectToLiveKit={connectToLiveKit}
+                            connectionState={connectionState}
+                            toggleMic={toggleMic}
+                            toggleWebcam={toggleWebcam}
+                            videoStream={videoStream}
+                            disabled={disabled}
+                        />
+                    </div>
                 </div>
 
-                <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
-                    <ChannelLiveOptions
-                        audioStream={audioStream}
-                        connectToLiveKit={connectToLiveKit}
-                        connectionState={connectionState}
-                        toggleMic={toggleMic}
-                        toggleWebcam={toggleWebcam}
-                        videoStream={videoStream}
-                        disabled={disabled}
-                    />
-                </div>
+                <ChannelChatbox participants={participants as RemoteParticipant[]} />
             </div>
-
-            <ChannelChatbox participants={participants as RemoteParticipant[]} />
+            <ChannelDiscriptionComponent />
         </div>
     );
 };

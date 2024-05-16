@@ -61,6 +61,8 @@ model CamUser {
   Channel             Channel?
   influencerDareCoins Int      @default(0)
 
+  followersCount Int @default(0)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

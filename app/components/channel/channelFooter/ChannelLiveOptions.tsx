@@ -24,7 +24,7 @@ const ChannelLiveOptions = ({
 }: ChannelLiveOptionsProps) => {
     return (
         <footer className='w-full'>
-            <div className='flex justify-center gap-2 items-center p-1 bg-slate-500'>
+            <div className='flex justify-center gap-2 items-center bg-[#18181b]'>
                 <Button onClick={toggleWebcam}>
                     {!videoStream && <img src='/assets/ifluencer_cam_icons/camerared.png' alt='camera logo' className='w-8' />}
                     {videoStream && <img src='/assets/ifluencer_cam_icons/camerawhite.png' alt='camera logo' className='w-8' />}
